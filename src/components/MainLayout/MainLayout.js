@@ -8,6 +8,7 @@ import {
 import MainNavBar from '../MainNavBar/MainNavBar';
 import { Route, Redirect } from 'react-router-dom';
 import Login from '../../pages/Login/Login';
+import Register from '../../pages/Register/Register';
 
 export default function MainLayout() {
   return (
@@ -19,7 +20,9 @@ export default function MainLayout() {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/register"></Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
             <Route exact path="/404"></Route>
             <Route exact path="/"></Route>
             {/* <Route exact path="*">
