@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import DashboardLayout from '../DashboardLayout/DashboardLayout';
 import MainLayout from '../MainLayout/MainLayout';
 
 export default function Layout() {
@@ -9,7 +10,9 @@ export default function Layout() {
         <Route path="/">
           <MainLayout />
         </Route>
-        {/* <Route exact path="/app"></Route> */}
+        <Route path="/app">
+          <DashboardLayout />
+        </Route>
       </BrowserRouter>
     </>
   );
