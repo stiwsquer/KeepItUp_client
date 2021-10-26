@@ -134,7 +134,7 @@ export default function Login() {
                 <Box sx={{ my: 2 }}>
                   <Button
                     type="submit"
-                    disable={isSubmitting}
+                    // disable={isSubmitting}
                     fullWidth
                     variant="contained"
                     size="large"

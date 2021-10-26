@@ -1,22 +1,23 @@
 import React from 'react';
 import {
-  MainLayoutRoot,
-  MainLayoutWrapper,
-  MainLayoutContainer,
-  MainLayoutContent,
+  MainRoot,
+  MainWrapper,
+  MainContainer,
+  MainContent,
 } from './MainLayout.style';
-import MainNavBar from '../MainNavBar/MainNavBar';
-import { Route, Redirect } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar';
+import { Route } from 'react-router-dom';
 import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
+import LandingPage from '../../pages/LandingPage/LandingPage';
 
 export default function MainLayout() {
   return (
-    <MainLayoutRoot>
-      <MainNavBar />
-      <MainLayoutWrapper>
-        <MainLayoutContainer>
-          <MainLayoutContent>
+    <MainRoot>
+      <NavBar isUserLoggedIn={false} />
+      <MainWrapper>
+        <MainContainer>
+          <MainContent>
             <Route exact path="/login">
               <Login />
             </Route>
@@ -24,13 +25,15 @@ export default function MainLayout() {
               <Register />
             </Route>
             <Route exact path="/404"></Route>
-            <Route exact path="/"></Route>
+            <Route exact path="/">
+              <LandingPage />
+            </Route>
             {/* <Route exact path="*">
               <Redirect to="/404" />
             </Route> */}
-          </MainLayoutContent>
-        </MainLayoutContainer>
-      </MainLayoutWrapper>
-    </MainLayoutRoot>
+          </MainContent>
+        </MainContainer>
+      </MainWrapper>
+    </MainRoot>
   );
 }

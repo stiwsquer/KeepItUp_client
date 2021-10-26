@@ -1,27 +1,30 @@
 import { styled } from '@material-ui/core/styles';
 
-export const MainRoot = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+export const DashboardRoot = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
   display: 'flex',
   height: '100%',
   overflow: 'hidden',
   width: '100%',
 }));
 
-export const MainWrapper = styled('div')({
+export const DashboardWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: '1 1 auto',
   overflow: 'hidden',
   paddingTop: 64,
-});
+  [theme.breakpoints.up('lg')]: {
+    paddingLeft: 256,
+  },
+}));
 
-export const MainContainer = styled('div')({
+export const DashboardContainer = styled('div')({
   display: 'flex',
   flex: '1 1 auto',
   overflow: 'hidden',
 });
 
-export const MainContent = styled('div')({
+export const DashboardContent = styled('div')({
   flex: '1 1 auto',
   height: '100%',
   overflow: 'auto',
