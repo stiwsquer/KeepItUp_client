@@ -5,9 +5,9 @@ import { Link, Hidden, IconButton, Button, Box } from '@mui/material';
 import InputIcon from '@mui/icons-material/Input';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function NavBar({ isUserLoggedIn, setOpenMobileMenu }) {
+export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
   return (
-    <AppBar elevation={0}>
+    <AppBar elevation={0} sx={{ zIndex: '1000' }}>
       <Toolbar sx={{ height: 64 }}>
         <Link
           component={RouterLink}
@@ -40,11 +40,7 @@ export default function NavBar({ isUserLoggedIn, setOpenMobileMenu }) {
 
         {isUserLoggedIn && (
           <Hidden mdUp>
-            <IconButton
-              color="inherit"
-              size="large"
-              onClick={setOpenMobileMenu(true)}
-            >
+            <IconButton color="inherit" size="large" onClick={toggleSidebar}>
               <MenuIcon />
             </IconButton>
           </Hidden>
