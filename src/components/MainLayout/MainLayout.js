@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Route, useLocation } from 'react-router-dom';
 import {
   LayoutRoot,
   LayoutWrapper,
@@ -6,7 +7,6 @@ import {
   LayoutContent,
 } from './MainLayout.style';
 import NavBar from '../NavBar/NavBar';
-import { Route, useLocation, Redirect } from 'react-router-dom';
 import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
 import LandingPage from '../../pages/LandingPage/LandingPage';
@@ -40,9 +40,11 @@ export default function MainLayout() {
     console.log(location.pathname);
     if (paths2.includes(location.pathname)) {
       return true;
-    } else if (paths1.includes(location.pathname)) {
+    }
+    if (paths1.includes(location.pathname)) {
       return false;
     }
+    return false;
   };
 
   return (
@@ -63,7 +65,7 @@ export default function MainLayout() {
                 onDashboardSidebarClose={onDashboardSidebarClose}
               />
             </Route>
-            <Route exact path="/404"></Route>
+            <Route exact path="/404" />
             <Route exact path="/">
               <LandingPage />
             </Route>

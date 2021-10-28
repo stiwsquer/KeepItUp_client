@@ -135,7 +135,7 @@ export default function Register() {
                     <Link
                       color="primary"
                       component={RouterLink}
-                      to="#"
+                      to="/"
                       underline="always"
                       variant="h6"
                     >
