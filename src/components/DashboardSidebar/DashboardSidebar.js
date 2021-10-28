@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Hidden,
-  Button,
   Drawer,
   Box,
   List,
@@ -11,7 +10,6 @@ import {
   Divider,
   Avatar,
   Typography,
-  Switch,
 } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';

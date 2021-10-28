@@ -1,39 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  MainRoot,
-  MainWrapper,
-  MainContainer,
-  MainContent,
+  LayoutRoot,
+  LayoutWrapper,
+  LayoutContainer,
+  LayoutContent,
 } from './MainLayout.style';
 import NavBar from '../NavBar/NavBar';
-import { Route } from 'react-router-dom';
+import { Route, useLocation, Redirect } from 'react-router-dom';
 import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
 import LandingPage from '../../pages/LandingPage/LandingPage';
+import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
 
 export default function MainLayout() {
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const location = useLocation();
+  const paths1 = ['/', '/login', '/register', '/404'];
+  const paths2 = ['/app'];
+
+  const onDashboardSidebarClose = (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setOpenSidebar(false);
+  };
+
+  const toggleSidebar = () => {
+    if (openSidebar) {
+      setOpenSidebar(false);
+    } else {
+      setOpenSidebar(true);
+    }
+  };
+
+  const navbarDisplay = () => {
+    console.log(location.pathname);
+    if (paths2.includes(location.pathname)) {
+      return true;
+    } else if (paths1.includes(location.pathname)) {
+      return false;
+    }
+  };
+
   return (
-    <MainRoot>
-      <NavBar isUserLoggedIn={false} />
-      <MainWrapper>
-        <MainContainer>
-          <MainContent>
+    <LayoutRoot>
+      <NavBar isUserLoggedIn={navbarDisplay()} toggleSidebar={toggleSidebar} />;
+      <LayoutWrapper isPadding={navbarDisplay()}>
+        <LayoutContainer>
+          <LayoutContent>
             <Route exact path="/login">
               <Login />
             </Route>
             <Route exact path="/register">
               <Register />
             </Route>
+            <Route path="/app">
+              <DashboardSidebar
+                openSidebar={openSidebar}
+                onDashboardSidebarClose={onDashboardSidebarClose}
+              />
+            </Route>
             <Route exact path="/404"></Route>
             <Route exact path="/">
               <LandingPage />
             </Route>
-            {/* <Route exact path="*">
+            {/* <Route path="*">
               <Redirect to="/404" />
             </Route> */}
-          </MainContent>
-        </MainContainer>
-      </MainWrapper>
-    </MainRoot>
+          </LayoutContent>
+        </LayoutContainer>
+      </LayoutWrapper>
+    </LayoutRoot>
   );
 }
