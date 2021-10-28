@@ -1,7 +1,7 @@
-import GlobalStyles from './GlobalStyles';
-import Layout from './components/Layout/Layout';
 import { ThemeProvider } from '@mui/material';
 import { StyledEngineProvider } from '@mui/styled-engine';
+import GlobalStyles from './GlobalStyles';
+import Layout from './components/Layout/Layout';
 import theme from './theme/index';
 
 function App() {

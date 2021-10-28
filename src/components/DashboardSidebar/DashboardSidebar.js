@@ -94,12 +94,7 @@ export default function DashboardSidebar({
         </Drawer>
       </Hidden>
       <Hidden mdDown>
-        <Drawer
-          variant="permanent"
-          anchor="left"
-          open={true}
-          sx={{ zIndex: '0' }}
-        >
+        <Drawer variant="permanent" anchor="left" open sx={{ zIndex: '0' }}>
           {list}
         </Drawer>
       </Hidden>

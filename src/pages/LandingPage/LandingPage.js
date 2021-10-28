@@ -1,16 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Redirect } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
+
+import { Box, Button, Container, Grid, Link } from '@mui/material';
 import background from '../../static/landingPageBackground.jpg';
 
 export default function LandingPage() {

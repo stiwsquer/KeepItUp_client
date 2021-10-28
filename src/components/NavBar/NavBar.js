@@ -1,7 +1,7 @@
-import { AppBar, Toolbar } from '@mui/material';
+import { AppBar, Toolbar, Link, Hidden, IconButton, Box } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link, Hidden, IconButton, Button, Box } from '@mui/material';
+
 import InputIcon from '@mui/icons-material/Input';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -25,7 +25,7 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
           sx={{
             flex: '1',
           }}
-        ></Box>
+        />
 
         {!isUserLoggedIn && (
           <RouterLink
