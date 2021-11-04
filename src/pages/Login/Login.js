@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { fetchLogin } from '../../services/router';
+import { fetchLogin } from '../../services/apiCalls';
 // import FacebookIcon from '../../icons/Facebook';
 // import GoogleIcon from '../../icons/Google';
 

@@ -3,14 +3,17 @@ import { StyledEngineProvider } from '@mui/styled-engine';
 import GlobalStyles from './GlobalStyles';
 import Layout from './components/Layout/Layout';
 import theme from './theme/index';
+import { DashboardSidebarContextProvider } from './Context/DashboardSidebarContext';
 
 function App() {
   return (
     <>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <Layout />
+          <DashboardSidebarContextProvider>
+            <GlobalStyles />
+            <Layout />
+          </DashboardSidebarContextProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </>

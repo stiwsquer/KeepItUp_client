@@ -21,7 +21,7 @@ import {
   Radio,
   Alert,
 } from '@mui/material';
-import { fetchRegister } from '../../services/router';
+import { fetchRegister } from '../../services/apiCalls';
 
 export default function Register() {
   const history = useHistory();

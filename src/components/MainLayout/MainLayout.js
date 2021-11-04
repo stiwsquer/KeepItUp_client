@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, useLocation } from 'react-router-dom';
 import {
   LayoutRoot,
@@ -7,41 +7,20 @@ import {
   LayoutContent,
 } from './MainLayout.style';
 import NavBar from '../NavBar/NavBar';
-import Login from '../../pages/Login/Login';
-import Register from '../../pages/Register/Register';
-import LandingPage from '../../pages/LandingPage/LandingPage';
-import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
-import DashboardExercises from '../DashboardExercises/DashboardExercises';
+import LoginRoute from '../Routes/LoginRoute';
+import RegisterRoute from '../Routes/RegisterRoute';
+import AppRoute from '../Routes/AppRoute';
+import LandingRoute from '../Routes/LandingRoute';
+import { useDashboardSidebarContext } from '../../Context/DashboardSidebarContext';
 
 export default function MainLayout() {
-  const [openSidebar, setOpenSidebar] = useState(false);
   const location = useLocation();
-  // const paths1 = ['/', '/login', '/register', '/404'];
-  // const paths2 = ['/app', 'app/calender', '/app/clients', '/app/exercises'];
-
-  const onDashboardSidebarClose = (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setOpenSidebar(false);
-  };
-
-  const toggleSidebar = () => {
-    if (openSidebar) {
-      setOpenSidebar(false);
-    } else {
-      setOpenSidebar(true);
-    }
-  };
+  const toggleSidebar = useDashboardSidebarContext()[2];
 
   const navbarDisplay = () => {
     if (location.pathname.includes('app')) {
       return true;
     }
-
     return false;
   };
 
@@ -51,25 +30,11 @@ export default function MainLayout() {
       <LayoutWrapper isPadding={navbarDisplay()}>
         <LayoutContainer>
           <LayoutContent>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route path="/app">
-              <DashboardSidebar
-                openSidebar={openSidebar}
-                onDashboardSidebarClose={onDashboardSidebarClose}
-              />
-              <Route path="/app/exercises">
-                <DashboardExercises />
-              </Route>
-            </Route>
+            <LoginRoute />
+            <RegisterRoute />
+            <AppRoute />
             <Route exact path="/404" />
-            <Route exact path="/">
-              <LandingPage />
-            </Route>
+            <LandingRoute />
             {/* <Route path="*">
               <Redirect to="/404" />
             </Route> */}

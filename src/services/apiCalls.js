@@ -50,3 +50,21 @@ export const fetchLogout = async () => {
     return console.error(err);
   }
 };
+
+export const fetchVerify = async () => {
+  try {
+    let res = await fetch('http://localhost:3001/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    res = await res.json();
+    console.log(res);
+    return res;
+  } catch (err) {
+    return console.error(err);
+  }
+};
