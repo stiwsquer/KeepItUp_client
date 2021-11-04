@@ -1,4 +1,6 @@
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
+
 import { StyledEngineProvider } from '@mui/styled-engine';
 import GlobalStyles from './GlobalStyles';
 import Layout from './components/Layout/Layout';
@@ -12,7 +14,9 @@ function App() {
         <ThemeProvider theme={theme}>
           <DashboardSidebarContextProvider>
             <GlobalStyles />
-            <Layout />
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
           </DashboardSidebarContextProvider>
         </ThemeProvider>
       </StyledEngineProvider>

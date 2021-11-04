@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useHistory } from 'react-router';
+
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {

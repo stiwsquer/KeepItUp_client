@@ -17,12 +17,12 @@ import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import StorageIcon from '@mui/icons-material/Storage';
 import { useHistory } from 'react-router-dom';
+import { useDashboardSidebarContext } from '../../Context/DashboardSidebarContext';
 
-export default function DashboardSidebar({
-  onDashboardSidebarClose,
-  openSidebar,
-}) {
+export default function DashboardSidebar() {
+  const [openSidebar, onDashboardSidebarClose] = useDashboardSidebarContext();
   const history = useHistory();
+
   function redirect(text) {
     switch (text) {
       case 'Calender':
