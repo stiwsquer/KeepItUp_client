@@ -72,6 +72,7 @@ export default function Register() {
               lastName: Yup.string().max(255).required('Last name is required'),
               password: Yup.string().max(255).required('Password is required'),
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
+              userType: Yup.string().required('User type is required'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
@@ -171,7 +172,9 @@ export default function Register() {
                     label="Client"
                   />
                 </RadioGroup>
-
+                {Boolean(touched.userType && errors.userType) && (
+                  <FormHelperText error>{errors.userType}</FormHelperText>
+                )}
                 <Box sx={{ ml: -1, alignItems: 'center', display: 'flex' }}>
                   <Checkbox
                     id="policy"

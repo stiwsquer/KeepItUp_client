@@ -1,27 +1,40 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
+  Alert,
   Box,
   Button,
   Container,
+  FormControlLabel,
+  FormHelperText,
   // Grid,
   Link,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from '@mui/material';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { fetchLogin } from '../../services/router';
 // import FacebookIcon from '../../icons/Facebook';
 // import GoogleIcon from '../../icons/Google';
 
 export default function Login() {
-  // const submit = async (values) => {
-  //   let res = await fetchRegister(values);
-  //   console.log(res);
-  //   res = res ? history.push('/app') : setError(true);
-  //   return res;
-  // };
+  const history = useHistory();
+  const [error, setError] = useState(false);
+
+  const submit = async (values) => {
+    let res = await fetchLogin(values);
+    console.log(res);
+    res = res ? history.push('/app') : setError(true);
+    return res;
+  };
+
+  const errorMessage = (
+    <Alert severity="error">User with that credentials does not exist</Alert>
+  );
 
   return (
     <>
@@ -42,6 +55,7 @@ export default function Login() {
             initialValues={{
               email: '',
               password: '',
+              userType: '',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -49,10 +63,11 @@ export default function Login() {
                 .max(255)
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required'),
+              userType: Yup.string().required('User type is required'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
-              // submit(values);
+              submit(values);
             }}
           >
             {({
@@ -77,6 +92,9 @@ export default function Login() {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
+
+                {error && errorMessage}
+
                 {/* <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
                     <Button
@@ -141,6 +159,31 @@ export default function Login() {
                   value={values.password}
                   variant="outlined"
                 />
+
+                <RadioGroup
+                  id="userType"
+                  value={values.userType}
+                  onChange={handleChange}
+                  row
+                  aria-label="userType"
+                  name="userType"
+                  sx={{ marginLeft: 1 }}
+                >
+                  <FormControlLabel
+                    value="coach"
+                    control={<Radio />}
+                    label="Coach"
+                  />
+                  <FormControlLabel
+                    value="client"
+                    control={<Radio />}
+                    label="Client"
+                  />
+                </RadioGroup>
+                {Boolean(touched.userType && errors.userType) && (
+                  <FormHelperText error>{errors.userType}</FormHelperText>
+                )}
+
                 <Box sx={{ my: 2 }}>
                   <Button
                     type="submit"
