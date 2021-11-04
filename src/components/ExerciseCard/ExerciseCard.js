@@ -2,12 +2,12 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import MyCardContent from '../MyCardContent/MyCardContent';
-import CardGif from '../CardGif/CardGif';
+import CardMedia from '../CardMedia/CardMedia';
 
 export default function ExerciseCard({
   id,
   title,
-  gifUrl,
+  url,
   bodyPart,
   equipment,
   target,
@@ -23,7 +23,7 @@ export default function ExerciseCard({
       }}
     >
       <CardHeader title={title} />
-      <CardGif gifUrl={gifUrl} />
+      <CardMedia url={url} />
       <MyCardContent
         bodyPart={bodyPart}
         equipment={equipment}

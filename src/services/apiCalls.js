@@ -68,3 +68,39 @@ export const fetchVerify = async () => {
     return console.error(err);
   }
 };
+
+export const fetchExercisesByName = async (name) => {
+  try {
+    let res = await fetch(`http://localhost:3001/exercise/name/${name}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    res = await res.json();
+    console.log(res);
+    return res;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const fetchAllExercises = async () => {
+  try {
+    let res = await fetch(`http://localhost:3001/exercise`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    res = await res.json();
+    console.log(res);
+    return res;
+  } catch (err) {
+    return console.error(err);
+  }
+};

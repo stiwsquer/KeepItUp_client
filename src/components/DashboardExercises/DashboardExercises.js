@@ -3,27 +3,29 @@ import { Box, Container } from '@mui/material';
 import debounce from 'lodash.debounce';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import SearchExerciseForm from '../SearchExerciseForm/SearchExerciseForm';
+import {
+  // fetchAllExercises,
+  fetchExercisesByName,
+} from '../../services/apiCalls';
 
 export default function DashboardExercises() {
   const [searchedData, setSearchedData] = useState([]);
 
+  // useEffect(async () => {
+  //   try {
+  //     const res = await fetchAllExercises();
+  //     setSearchedData(res);
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // }, []);
+
   const handleChange = async (e) => {
     setSearchedData([]);
-    console.log(e.target.value);
+    if (e.target.value === '') return;
     try {
-      let res = await fetch(
-        `https://exercisedb.p.rapidapi.com/exercises/name/${e.target.value}`,
-        {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
-            'x-rapidapi-key': `1270ff6e13msh311d81105679100p1768dejsn62268c858ade`,
-          },
-        },
-      );
-      res = await res.json();
+      const res = await fetchExercisesByName(e.target.value);
       setSearchedData(res);
-      console.log(res);
     } catch (err) {
       console.error(err.message);
     }
@@ -53,7 +55,6 @@ export default function DashboardExercises() {
         <Box sx={{ margin: '2rem 0', display: 'flex', alignItems: 'center' }}>
           <SearchExerciseForm handleChange={debouncedHandleChange} />
         </Box>
-
         <Box
           sx={{
             display: 'flex',
@@ -66,7 +67,7 @@ export default function DashboardExercises() {
             <>
               <ExerciseCard
                 title={card.name}
-                gifUrl={card.gifUrl}
+                url={card.url}
                 bodyPart={card.bodyPart}
                 equipment={card.equipment}
                 target={card.target}
