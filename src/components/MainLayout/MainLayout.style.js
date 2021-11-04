@@ -3,7 +3,6 @@ import { styled } from '@material-ui/core/styles';
 export const LayoutRoot = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   // backgroundColor: theme.palette.background.paper,
-
   display: 'flex',
   height: '100%',
   overflow: 'hidden',
@@ -16,7 +15,7 @@ export const LayoutWrapper = styled('div')(({ theme, isPadding }) => ({
   overflow: 'hidden',
   paddingTop: 64,
   zIndex: '0',
-  [isPadding && theme.breakpoints.up('md')]: {
+  [isPadding && theme.breakpoints.up('lg')]: {
     paddingLeft: 256,
   },
 }));

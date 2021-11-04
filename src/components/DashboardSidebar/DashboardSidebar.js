@@ -4,22 +4,44 @@ import {
   Drawer,
   Box,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Divider,
   Avatar,
   Typography,
+  // Link,
 } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import StorageIcon from '@mui/icons-material/Storage';
+import { useHistory } from 'react-router-dom';
 
 export default function DashboardSidebar({
   onDashboardSidebarClose,
   openSidebar,
 }) {
+  const history = useHistory();
+  function redirect(text) {
+    switch (text) {
+      case 'Calender':
+        history.push('/app/calender');
+        break;
+      case 'Clients':
+        history.push('/app/clients');
+        break;
+      case 'Chat':
+        history.push('/app/chat');
+        break;
+      case 'Exercises':
+        history.push('/app/exercises');
+        break;
+      default:
+        history.push('/app/calender');
+    }
+  }
+
   const list = (
     <Box
       sx={{
@@ -57,7 +79,12 @@ export default function DashboardSidebar({
       <Box>
         <List>
           {['Calender', 'Clients', 'Chat', 'Exercises'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItemButton
+              onClick={() => {
+                redirect(text);
+              }}
+              key={text}
+            >
               <ListItemIcon>
                 {(() => {
                   switch (index) {
@@ -75,7 +102,7 @@ export default function DashboardSidebar({
                 })()}
               </ListItemIcon>
               <ListItemText primary={text} />
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
       </Box>
@@ -83,7 +110,7 @@ export default function DashboardSidebar({
   );
   return (
     <>
-      <Hidden mdUp>
+      <Hidden lgUp>
         <Drawer
           anchor="left"
           open={openSidebar}
@@ -93,7 +120,7 @@ export default function DashboardSidebar({
           {list}
         </Drawer>
       </Hidden>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Drawer variant="permanent" anchor="left" open sx={{ zIndex: '0' }}>
           {list}
         </Drawer>

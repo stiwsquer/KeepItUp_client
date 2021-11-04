@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink } from 'react-router-dom';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useHistory } from 'react-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -12,9 +14,29 @@ import {
   Checkbox,
   Link,
   FormHelperText,
+  // Select,
+  // MenuItem,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Alert,
 } from '@mui/material';
+import { fetchRegister } from '../../services/router';
 
 export default function Register() {
+  const history = useHistory();
+  const [error, setError] = useState(false);
+
+  const submit = async (values) => {
+    let res = await fetchRegister(values);
+    console.log(res);
+    res = res ? history.push('/login') : setError(true);
+    return res;
+  };
+
+  const errorMessage = (
+    <Alert severity="error">User with that email already exists</Alert>
+  );
   return (
     <>
       <Helmet>
@@ -37,6 +59,7 @@ export default function Register() {
               lastName: '',
               password: '',
               policy: false,
+              userType: '',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -50,7 +73,10 @@ export default function Register() {
               password: Yup.string().max(255).required('Password is required'),
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
             })}
-            onSubmit={() => {}}
+            onSubmit={(values, { setSubmitting }) => {
+              setSubmitting(false);
+              submit(values);
+            }}
           >
             {({
               errors,
@@ -74,6 +100,7 @@ export default function Register() {
                     Use your email to create new account
                   </Typography>
                 </Box>
+                {error && errorMessage}
                 <TextField
                   id="firstName"
                   label="First name"
@@ -114,6 +141,7 @@ export default function Register() {
                   id="password"
                   label="Password"
                   name="password"
+                  type="password"
                   error={Boolean(touched.password && errors.password)}
                   helperText={touched.password && errors.password}
                   value={values.password}
@@ -122,6 +150,28 @@ export default function Register() {
                   fullWidth
                   margin="normal"
                 />
+
+                <RadioGroup
+                  id="userType"
+                  value={values.userType}
+                  onChange={handleChange}
+                  row
+                  aria-label="userType"
+                  name="userType"
+                  sx={{ marginLeft: 1 }}
+                >
+                  <FormControlLabel
+                    value="coach"
+                    control={<Radio />}
+                    label="Coach"
+                  />
+                  <FormControlLabel
+                    value="client"
+                    control={<Radio />}
+                    label="Client"
+                  />
+                </RadioGroup>
+
                 <Box sx={{ ml: -1, alignItems: 'center', display: 'flex' }}>
                   <Checkbox
                     id="policy"

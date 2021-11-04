@@ -11,12 +11,13 @@ import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
 import LandingPage from '../../pages/LandingPage/LandingPage';
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
+import DashboardExercises from '../DashboardExercises/DashboardExercises';
 
 export default function MainLayout() {
   const [openSidebar, setOpenSidebar] = useState(false);
   const location = useLocation();
-  const paths1 = ['/', '/login', '/register', '/404'];
-  const paths2 = ['/app'];
+  // const paths1 = ['/', '/login', '/register', '/404'];
+  // const paths2 = ['/app', 'app/calender', '/app/clients', '/app/exercises'];
 
   const onDashboardSidebarClose = (event) => {
     if (
@@ -37,13 +38,10 @@ export default function MainLayout() {
   };
 
   const navbarDisplay = () => {
-    console.log(location.pathname);
-    if (paths2.includes(location.pathname)) {
+    if (location.pathname.includes('app')) {
       return true;
     }
-    if (paths1.includes(location.pathname)) {
-      return false;
-    }
+
     return false;
   };
 
@@ -64,6 +62,9 @@ export default function MainLayout() {
                 openSidebar={openSidebar}
                 onDashboardSidebarClose={onDashboardSidebarClose}
               />
+              <Route path="/app/exercises">
+                <DashboardExercises />
+              </Route>
             </Route>
             <Route exact path="/404" />
             <Route exact path="/">

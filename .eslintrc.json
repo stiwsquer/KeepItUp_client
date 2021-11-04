@@ -8,6 +8,8 @@
     "node": true
   },
   "rules": {
+    "no-console": 0,
+    "react/jsx-props-no-spreading": 0,
     "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/href-no-hash": ["off"],
