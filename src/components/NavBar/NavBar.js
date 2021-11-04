@@ -39,7 +39,7 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
         )}
 
         {isUserLoggedIn && (
-          <Hidden mdUp>
+          <Hidden lgUp>
             <IconButton color="inherit" size="large" onClick={toggleSidebar}>
               <MenuIcon />
             </IconButton>

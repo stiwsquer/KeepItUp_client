@@ -5,17 +5,24 @@ import {
   Box,
   Button,
   Container,
-  Grid,
+  // Grid,
   Link,
   TextField,
   Typography,
 } from '@mui/material';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import FacebookIcon from '../../icons/Facebook';
-import GoogleIcon from '../../icons/Google';
+// import FacebookIcon from '../../icons/Facebook';
+// import GoogleIcon from '../../icons/Google';
 
 export default function Login() {
+  // const submit = async (values) => {
+  //   let res = await fetchRegister(values);
+  //   console.log(res);
+  //   res = res ? history.push('/app') : setError(true);
+  //   return res;
+  // };
+
   return (
     <>
       <Helmet>
@@ -43,7 +50,10 @@ export default function Login() {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required'),
             })}
-            onSubmit={() => {}}
+            onSubmit={(values, { setSubmitting }) => {
+              setSubmitting(false);
+              // submit(values);
+            }}
           >
             {({
               errors,
@@ -67,7 +77,7 @@ export default function Login() {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
-                <Grid container spacing={3}>
+                {/* <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
                     <Button
                       color="primary"
@@ -90,8 +100,8 @@ export default function Login() {
                       Login with Google
                     </Button>
                   </Grid>
-                </Grid>
-                <Box
+                </Grid> */}
+                {/* <Box
                   sx={{
                     mb: 1,
                     mt: 3,
@@ -104,7 +114,7 @@ export default function Login() {
                   >
                     or login with email address
                   </Typography>
-                </Box>
+                </Box> */}
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
