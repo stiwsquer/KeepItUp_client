@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import InputIcon from '@mui/icons-material/Input';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { fetchLogout } from '../../services/router';
+import { fetchLogout } from '../../services/apiCalls';
 
 export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
   const logout = async () => {
