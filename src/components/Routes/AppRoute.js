@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
+import { CalendarPicker } from '@mui/lab';
 import DashboardExercises from '../DashboardExercises/DashboardExercises';
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
 import { fetchVerify } from '../../services/apiCalls';
@@ -18,6 +19,9 @@ export default function AppRoute() {
       <DashboardSidebar />
       <Route path="/app/exercises">
         <DashboardExercises />
+      </Route>
+      <Route path="/app/calendar">
+        <CalendarPicker />
       </Route>
     </Route>
   );

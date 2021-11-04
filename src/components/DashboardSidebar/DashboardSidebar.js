@@ -25,8 +25,8 @@ export default function DashboardSidebar() {
 
   function redirect(text) {
     switch (text) {
-      case 'Calender':
-        history.push('/app/calender');
+      case 'Calendar':
+        history.push('/app/calendar');
         break;
       case 'Clients':
         history.push('/app/clients');
@@ -38,7 +38,7 @@ export default function DashboardSidebar() {
         history.push('/app/exercises');
         break;
       default:
-        history.push('/app/calender');
+        history.push('/app/calendar');
     }
   }
 
@@ -78,7 +78,7 @@ export default function DashboardSidebar() {
       <Divider />
       <Box>
         <List>
-          {['Calender', 'Clients', 'Chat', 'Exercises'].map((text, index) => (
+          {['Calendar', 'Clients', 'Chat', 'Exercises'].map((text, index) => (
             <ListItemButton
               onClick={() => {
                 redirect(text);
