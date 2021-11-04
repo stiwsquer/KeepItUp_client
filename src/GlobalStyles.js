@@ -1,4 +1,4 @@
-import { createStyles, makeStyles } from '@material-ui/core';
+import { createStyles, makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() =>
         width: '100%',
       },
     },
-  })
+  }),
 );
 
 const GlobalStyles = () => {
