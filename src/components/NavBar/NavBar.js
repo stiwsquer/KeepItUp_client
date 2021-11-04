@@ -4,8 +4,14 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import InputIcon from '@mui/icons-material/Input';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { fetchLogout } from '../../services/router';
 
 export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
+  const logout = async () => {
+    const res = await fetchLogout();
+    console.log(res);
+  };
   return (
     <AppBar elevation={0} sx={{ zIndex: '1000' }}>
       <Toolbar sx={{ height: 64 }}>
@@ -39,11 +45,23 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
         )}
 
         {isUserLoggedIn && (
-          <Hidden lgUp>
-            <IconButton color="inherit" size="large" onClick={toggleSidebar}>
-              <MenuIcon />
-            </IconButton>
-          </Hidden>
+          <>
+            <RouterLink
+              to="/"
+              style={{ textDecoration: 'none', color: 'white' }}
+              onClick={() => logout()}
+            >
+              <IconButton color="inherit" size="large">
+                <LogoutIcon />
+              </IconButton>
+            </RouterLink>
+
+            <Hidden lgUp>
+              <IconButton color="inherit" size="large" onClick={toggleSidebar}>
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+          </>
         )}
       </Toolbar>
     </AppBar>
