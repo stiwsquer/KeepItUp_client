@@ -18,8 +18,12 @@ export default function ExerciseCard({
       sx={{
         flex: '1 1 20rem',
         maxWidth: 345,
-        // maxHeight: 330,
         margin: '1rem',
+        ':hover': {
+          transform: 'scale(1.1)',
+          boxShadow: '1rem 0rem 0 rgba(86, 100, 210,1)',
+          border: '0.1rem solid rgba(86, 100, 210,1)',
+        },
       }}
     >
       <CardHeader title={title} />
