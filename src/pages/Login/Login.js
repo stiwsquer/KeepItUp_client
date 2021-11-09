@@ -27,7 +27,6 @@ export default function Login() {
 
   const submit = async (values) => {
     let res = await fetchLogin(values);
-    console.log(res);
     res = res ? history.push('/app') : setError(true);
     return res;
   };
@@ -55,7 +54,7 @@ export default function Login() {
             initialValues={{
               email: '',
               password: '',
-              userType: '',
+              role: '',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -63,7 +62,7 @@ export default function Login() {
                 .max(255)
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required'),
-              userType: Yup.string().required('User type is required'),
+              role: Yup.string().required('User type is required'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
@@ -161,12 +160,12 @@ export default function Login() {
                 />
 
                 <RadioGroup
-                  id="userType"
-                  value={values.userType}
+                  id="role"
+                  value={values.role}
                   onChange={handleChange}
                   row
-                  aria-label="userType"
-                  name="userType"
+                  aria-label="role"
+                  name="role"
                   sx={{ marginLeft: 1 }}
                 >
                   <FormControlLabel
@@ -180,14 +179,14 @@ export default function Login() {
                     label="Client"
                   />
                 </RadioGroup>
-                {Boolean(touched.userType && errors.userType) && (
-                  <FormHelperText error>{errors.userType}</FormHelperText>
+                {Boolean(touched.role && errors.role) && (
+                  <FormHelperText error>{errors.role}</FormHelperText>
                 )}
 
                 <Box sx={{ my: 2 }}>
                   <Button
                     type="submit"
-                    disable={isSubmitting}
+                    disabled={isSubmitting}
                     fullWidth
                     variant="contained"
                     size="large"

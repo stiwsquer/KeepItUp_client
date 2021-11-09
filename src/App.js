@@ -7,6 +7,7 @@ import GlobalStyles from './GlobalStyles';
 import Layout from './components/Layout/Layout';
 import theme from './theme/index';
 import { DashboardSidebarContextProvider } from './Context/DashboardSidebarContext';
+import { ExerciseContextProvider } from './Context/ExerciseCardContext';
 
 function App() {
   return (
@@ -14,10 +15,12 @@ function App() {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <DashboardSidebarContextProvider>
-            <GlobalStyles />
-            <BrowserRouter>
-              <Layout />
-            </BrowserRouter>
+            <ExerciseContextProvider>
+              <GlobalStyles />
+              <BrowserRouter>
+                <Layout />
+              </BrowserRouter>
+            </ExerciseContextProvider>
           </DashboardSidebarContextProvider>
         </ThemeProvider>
       </StyledEngineProvider>

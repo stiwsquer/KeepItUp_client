@@ -2,11 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Container } from '@mui/material';
 // import Pagination from '@mui/material/Pagination';
 import debounce from 'lodash.debounce';
+import { useLocation } from 'react-router-dom';
 import ExerciseCards from '../ExerciseCards/ExerciseCards';
 import SearchExerciseForm from '../SearchExerciseForm/SearchExerciseForm';
 import { fetchExercises } from '../../services/apiCalls';
 import MyPagination from '../MyPagination/MyPagination';
 import PerPageSelect from '../PerPageSelect/PerPageSelect';
+import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 
 export default function DashboardExercises() {
   const [searchedData, setSearchedData] = useState([]);
@@ -16,6 +18,13 @@ export default function DashboardExercises() {
   const [nextPage, setNextPage] = useState(false);
   const [prevPage, setPrevPage] = useState(false);
   const perPageValues = [20, 50, 100, 200];
+  const location = useLocation();
+  const [, setBigCard] = useExerciseCardContext();
+
+  useEffect(() => {
+    if (location.pathname === '/app/exercises') setBigCard(true);
+    else setBigCard(false);
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -49,6 +58,7 @@ export default function DashboardExercises() {
 
   useEffect(() => {
     fetchData();
+    console.log(searchedData);
   }, [searchedValue, page, limit]);
 
   useEffect(() => {
@@ -63,35 +73,37 @@ export default function DashboardExercises() {
     },
     [],
   );
-
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Container maxWidth="xl">
-        <Box sx={{ margin: '2rem 0', display: 'flex', alignItems: 'center' }}>
-          <SearchExerciseForm handleChange={debouncedHandleChange} />
-          <PerPageSelect
-            limit={limit}
-            handleLimitChange={handleLimitChange}
-            values={perPageValues}
+    <>
+      <Box
+        sx={{
+          backgroundColor: 'background.default',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Container maxWidth="xl">
+          <Box sx={{ margin: '2rem 0', display: 'flex', alignItems: 'center' }}>
+            <SearchExerciseForm handleChange={debouncedHandleChange} />
+            <PerPageSelect
+              limit={limit}
+              handleLimitChange={handleLimitChange}
+              values={perPageValues}
+            />
+          </Box>
+          <ExerciseCards exercises={searchedData} />
+          <MyPagination
+            nextPage={nextPage}
+            prevPage={prevPage}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+            page={page}
           />
-        </Box>
-        <ExerciseCards exercises={searchedData} />
-        <MyPagination
-          nextPage={nextPage}
-          prevPage={prevPage}
-          handleNextPage={handleNextPage}
-          handlePrevPage={handlePrevPage}
-          page={page}
-        />
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </>
   );
 }
