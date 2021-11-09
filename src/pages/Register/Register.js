@@ -59,7 +59,7 @@ export default function Register() {
               lastName: '',
               password: '',
               policy: false,
-              userType: '',
+              role: '',
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -72,7 +72,7 @@ export default function Register() {
               lastName: Yup.string().max(255).required('Last name is required'),
               password: Yup.string().max(255).required('Password is required'),
               policy: Yup.boolean().oneOf([true], 'This field must be checked'),
-              userType: Yup.string().required('User type is required'),
+              role: Yup.string().required('User type is required'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
@@ -153,12 +153,12 @@ export default function Register() {
                 />
 
                 <RadioGroup
-                  id="userType"
-                  value={values.userType}
+                  id="role"
+                  value={values.role}
                   onChange={handleChange}
                   row
-                  aria-label="userType"
-                  name="userType"
+                  aria-label="role"
+                  name="role"
                   sx={{ marginLeft: 1 }}
                 >
                   <FormControlLabel
@@ -172,14 +172,13 @@ export default function Register() {
                     label="Client"
                   />
                 </RadioGroup>
-                {Boolean(touched.userType && errors.userType) && (
-                  <FormHelperText error>{errors.userType}</FormHelperText>
+                {Boolean(touched.role && errors.role) && (
+                  <FormHelperText error>{errors.role}</FormHelperText>
                 )}
                 <Box sx={{ ml: -1, alignItems: 'center', display: 'flex' }}>
                   <Checkbox
                     id="policy"
                     name="policy"
-                    label
                     onChange={handleChange}
                     checked={values.policy}
                   />

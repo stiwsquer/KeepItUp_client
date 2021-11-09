@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 
 export default function SearchExerciseForm({ handleChange }) {
   return (
-    <form
+    <div
       style={{
         width: '100%',
         position: 'relative',
@@ -29,6 +29,6 @@ export default function SearchExerciseForm({ handleChange }) {
         type="text"
         onChange={handleChange}
       />
-    </form>
+    </div>
   );
 }
