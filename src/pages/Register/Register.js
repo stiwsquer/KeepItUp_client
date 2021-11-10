@@ -14,21 +14,19 @@ import {
   Checkbox,
   Link,
   FormHelperText,
-  // Select,
-  // MenuItem,
   RadioGroup,
   FormControlLabel,
   Radio,
   Alert,
 } from '@mui/material';
-import { fetchRegister } from '../../services/apiCalls';
+import { ENDPOINTS, fetchData, HTTP_METHODS } from '../../services/apiCalls';
 
 export default function Register() {
   const history = useHistory();
   const [error, setError] = useState(false);
 
   const submit = async (values) => {
-    let res = await fetchRegister(values);
+    let res = await fetchData(values, HTTP_METHODS.POST, ENDPOINTS.REGISTER);
     console.log(res);
     res = res ? history.push('/login') : setError(true);
     return res;

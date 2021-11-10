@@ -38,7 +38,7 @@ export default function ExerciseCard({
     } else if (boxShadowColor) {
       setExercise({ id, delete: true });
     } else {
-      setExercise({ id, name: title });
+      setExercise({ id, name: title, url, bodyPart, equipment, target });
     }
   };
 
@@ -52,7 +52,6 @@ export default function ExerciseCard({
         margin: '1rem',
         ':hover': {
           transform: bigCard ? 'scale(1.1)' : 'scale(1)',
-          // boxShadow: `1rem 0rem 0 rgba(86, 100, 210,1)`,
           boxShadow: boxShadowColor
             ? `1rem 0rem 0 ${boxShadowColor}`
             : `1rem 0rem 0 rgba(86, 100, 210,1)`,

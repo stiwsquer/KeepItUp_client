@@ -1,16 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Container } from '@mui/material';
-// import Pagination from '@mui/material/Pagination';
 import debounce from 'lodash.debounce';
-import { useLocation } from 'react-router-dom';
-import ExerciseCards from '../ExerciseCards/ExerciseCards';
-import SearchExerciseForm from '../SearchExerciseForm/SearchExerciseForm';
-import { fetchExercises } from '../../services/apiCalls';
+import MyCards from '../MyCards/MyCards';
+import SearchForm from '../SearchForm/SearchForm';
+import {
+  CREDENTIALS,
+  ENDPOINTS,
+  fetchData,
+  HTTP_METHODS,
+} from '../../services/apiCalls';
 import MyPagination from '../MyPagination/MyPagination';
 import PerPageSelect from '../PerPageSelect/PerPageSelect';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
+import DATA_TYPES from '../DataTypes';
 
-export default function DashboardExercises() {
+export default function DashboardSearch({ dashboardType, bigCard }) {
   const [searchedData, setSearchedData] = useState([]);
   const [searchedValue, setSearchedValue] = useState('');
   const [page, setPage] = useState(1);
@@ -18,17 +22,22 @@ export default function DashboardExercises() {
   const [nextPage, setNextPage] = useState(false);
   const [prevPage, setPrevPage] = useState(false);
   const perPageValues = [20, 50, 100, 200];
-  const location = useLocation();
   const [, setBigCard] = useExerciseCardContext();
 
-  useEffect(() => {
-    if (location.pathname === '/app/exercises') setBigCard(true);
-    else setBigCard(false);
-  }, []);
-
-  const fetchData = async () => {
+  const handleFetchData = async () => {
+    let endpoint;
+    if (dashboardType === DATA_TYPES.EXERCISE) endpoint = ENDPOINTS.EXERCISE;
+    if (dashboardType === DATA_TYPES.WORKOUT) endpoint = ENDPOINTS.WORKOUT;
     try {
-      const res = await fetchExercises(searchedValue, page, limit);
+      const res = await fetchData(
+        null,
+        HTTP_METHODS.GET,
+        endpoint,
+        CREDENTIALS.INCLUDE,
+        searchedValue,
+        page,
+        limit,
+      );
       console.log(res);
       if (res.next) setNextPage(true);
       else setNextPage(false);
@@ -57,7 +66,7 @@ export default function DashboardExercises() {
   };
 
   useEffect(() => {
-    fetchData();
+    handleFetchData();
     console.log(searchedData);
   }, [searchedValue, page, limit]);
 
@@ -67,12 +76,12 @@ export default function DashboardExercises() {
 
   const debouncedHandleChange = useMemo(() => debounce(handleChange, 300), []);
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    setBigCard(bigCard);
+    return () => {
       debouncedHandleChange.cancel();
-    },
-    [],
-  );
+    };
+  }, []);
   return (
     <>
       <Box
@@ -87,14 +96,14 @@ export default function DashboardExercises() {
       >
         <Container maxWidth="xl">
           <Box sx={{ margin: '2rem 0', display: 'flex', alignItems: 'center' }}>
-            <SearchExerciseForm handleChange={debouncedHandleChange} />
+            <SearchForm handleChange={debouncedHandleChange} />
             <PerPageSelect
               limit={limit}
               handleLimitChange={handleLimitChange}
               values={perPageValues}
             />
           </Box>
-          <ExerciseCards exercises={searchedData} />
+          <MyCards cards={searchedData} dataType={dashboardType} />
           <MyPagination
             nextPage={nextPage}
             prevPage={prevPage}

@@ -1,102 +1,56 @@
-export const fetchRegister = async (values) => {
-  try {
-    const res = await fetch('http://localhost:3001/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...values,
-      }),
-    });
-    return res;
-  } catch (err) {
-    return console.error(err);
-  }
+export const HTTP_METHODS = {
+  POST: 'POST',
+  GET: 'GET',
+  DELETE: 'DELETE',
+  PUT: 'PUT',
+  PATCH: 'PATCH',
 };
 
-export const fetchLogin = async (values) => {
-  try {
-    const res = await fetch('http://localhost:3001/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({
-        ...values,
-      }),
-    });
-
-    console.log(res);
-    return res;
-  } catch (err) {
-    return console.error(err);
-  }
+export const ENDPOINTS = {
+  REGISTER: 'register',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  VERIFY: 'verify',
+  EXERCISE: 'exercise',
+  WORKOUT: 'workout',
 };
 
-export const fetchLogout = async () => {
-  try {
-    let res = await fetch('http://localhost:3001/logout', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-
-    res = await res.json();
-    console.log(res);
-    return res;
-  } catch (err) {
-    return console.error(err);
-  }
+export const CREDENTIALS = {
+  INCLUDE: 'include',
+  NONE: null,
 };
 
-export const fetchVerify = async () => {
+export const fetchData = async (
+  valuesToSave,
+  httpMethod,
+  endpoint,
+  credentials,
+  name,
+  page,
+  limit,
+) => {
   try {
-    const res = await fetch('http://localhost:3001/verify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-    console.log(res);
-    return res;
-  } catch (err) {
-    return console.error(err);
-  }
-};
+    const nameString = name || '';
+    const pageString = page ? '?page=' : '';
+    const limitString = limit ? '&limit=' : '';
+    const pageNumber = page || '';
+    const limitNumber = limit || '';
 
-export const fetchExercises = async (name, page, limit) => {
-  try {
     let res = await fetch(
-      `http://localhost:3001/exercise/${name}?page=${page}&limit=${limit}`,
+      `http://localhost:3001/${endpoint}/${nameString}${pageString}${pageNumber}${limitString}${limitNumber}`,
       {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
+        method: `${httpMethod}`,
+        headers: { 'Content-Type': 'application/json' },
+        credentials: `${credentials}`,
+        body: valuesToSave
+          ? JSON.stringify({
+              ...valuesToSave,
+            })
+          : null,
       },
     );
 
-    res = await res.json();
-    console.log(res);
-    return res;
-  } catch (err) {
-    return console.error(err);
-  }
-};
-
-export const fetchSaveWorkout = async (values) => {
-  try {
-    const res = await fetch('http://localhost:3001/workout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({
-        ...values,
-      }),
-    });
-    console.log(res);
+    res = httpMethod === HTTP_METHODS.POST ? res : await res.json();
     return res;
   } catch (err) {
     return console.error(err);
