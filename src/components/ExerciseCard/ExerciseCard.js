@@ -38,7 +38,7 @@ export default function ExerciseCard({
     } else if (boxShadowColor) {
       setExercise({ id, delete: true });
     } else {
-      setExercise({ id, name: title, url, bodyPart, equipment, target });
+      setExercise({ id, name: title });
     }
   };
 
