@@ -1,13 +1,12 @@
 export const fetchRegister = async (values) => {
   try {
-    let res = await fetch('http://localhost:3001/register', {
+    const res = await fetch('http://localhost:3001/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...values,
       }),
     });
-    res = await res.json();
     return res;
   } catch (err) {
     return console.error(err);
@@ -16,7 +15,7 @@ export const fetchRegister = async (values) => {
 
 export const fetchLogin = async (values) => {
   try {
-    let res = await fetch('http://localhost:3001/login', {
+    const res = await fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -25,7 +24,6 @@ export const fetchLogin = async (values) => {
       }),
     });
 
-    res = await res.json();
     console.log(res);
     return res;
   } catch (err) {
@@ -53,15 +51,13 @@ export const fetchLogout = async () => {
 
 export const fetchVerify = async () => {
   try {
-    let res = await fetch('http://localhost:3001/verify', {
+    const res = await fetch('http://localhost:3001/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
     });
-
-    res = await res.json();
     console.log(res);
     return res;
   } catch (err) {
@@ -83,6 +79,23 @@ export const fetchExercises = async (name, page, limit) => {
     );
 
     res = await res.json();
+    console.log(res);
+    return res;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const fetchSaveWorkout = async (values) => {
+  try {
+    const res = await fetch('http://localhost:3001/workout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        ...values,
+      }),
+    });
     console.log(res);
     return res;
   } catch (err) {

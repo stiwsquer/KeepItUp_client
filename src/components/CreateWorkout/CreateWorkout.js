@@ -1,23 +1,72 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Container, TextField, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Container,
+  TextField,
+  Typography,
+  Button,
+  Alert,
+} from '@mui/material';
 import DashboardExercises from '../DashboardExercises/DashboardExercises';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 import ExerciseCards from '../ExerciseCards/ExerciseCards';
+import { fetchSaveWorkout } from '../../services/apiCalls';
 
 export default function Workouts() {
   const [, , exercise] = useExerciseCardContext();
   const [exercises, setExercises] = useState([]);
+  const history = useHistory();
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const errorMessage = (
+    <Alert variant="outlined" severity="error">
+      Unable to create a workout
+    </Alert>
+  );
+  const successMessage = (
+    <Alert variant="outlined" severity="success">
+      Successfully created workout
+    </Alert>
+  );
 
   useEffect(() => {
     if (exercise.delete) {
       const newExercises = exercises.filter((e) => e.id !== exercise.id);
       setExercises([...newExercises]);
-    } else if (exercise.name) setExercises([...exercises, exercise]);
+    } else if (exercise.name && exercise.id) {
+      let first = true;
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < exercises.length; i++) {
+        if (exercises[i].id === exercise.id) {
+          first = false;
+          break;
+        }
+      }
+      if (first) setExercises([...exercises, exercise]);
+    }
   }, [exercise]);
 
-  const submit = async () => {};
+  const submit = async (values) => {
+    const data = {
+      description: values.description,
+      title: values.title,
+      exercises,
+    };
+    const res = await fetchSaveWorkout(data);
+    if (res.status === 200) {
+      setSuccess(true);
+      setTimeout(() => {
+        history.push('/app/calendar');
+      }, 1000);
+    } else {
+      setError(true);
+    }
+    return res;
+  };
 
   return (
     <>
@@ -29,7 +78,7 @@ export default function Workouts() {
           minHeight: '40%',
           width: '100%',
           justifyContent: 'center',
-          pt: 5,
+          pt: 3,
         }}
       >
         <Container maxWidth="xl">
@@ -57,9 +106,11 @@ export default function Workouts() {
               values,
             }) => (
               <form onSubmit={handleSubmit}>
+                {error && errorMessage}
+                {success && successMessage}
                 <Box
                   sx={{
-                    mb: 3,
+                    my: 3,
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
