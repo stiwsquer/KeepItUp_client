@@ -5,11 +5,21 @@ import { Link as RouterLink } from 'react-router-dom';
 import InputIcon from '@mui/icons-material/Input';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { fetchLogout } from '../../services/apiCalls';
+import {
+  CREDENTIALS,
+  ENDPOINTS,
+  fetchData,
+  HTTP_METHODS,
+} from '../../services/apiCalls';
 
 export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
   const logout = async () => {
-    const res = await fetchLogout();
+    const res = await fetchData(
+      null,
+      HTTP_METHODS.DELETE,
+      ENDPOINTS.LOGOUT,
+      CREDENTIALS.INCLUDE,
+    );
     console.log(res);
   };
   return (

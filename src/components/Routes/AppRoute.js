@@ -2,18 +2,29 @@ import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Calendar from '../Calendar/Calendar';
-import DashboardExercises from '../DashboardExercises/DashboardExercises';
+import DashboardSearch from '../DashboardSearch/DashboardSearch';
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
-import { fetchVerify } from '../../services/apiCalls';
+import {
+  CREDENTIALS,
+  ENDPOINTS,
+  fetchData,
+  HTTP_METHODS,
+} from '../../services/apiCalls';
 import CreateWorkout from '../CreateWorkout/CreateWorkout';
+import DATA_TYPES from '../DataTypes';
 
 export default function AppRoute() {
   const history = useHistory();
 
   useEffect(async () => {
-    const res = await fetchVerify();
+    const res = await fetchData(
+      null,
+      HTTP_METHODS.POST,
+      ENDPOINTS.VERIFY,
+      CREDENTIALS.INCLUDE,
+    );
     console.log(res);
-    if (!res) history.push('/');
+    if (res.status !== 200) history.push('/');
   }, []);
 
   return (
@@ -24,7 +35,7 @@ export default function AppRoute() {
       <Route path="/app">
         <DashboardSidebar />
         <Route path="/app/exercises">
-          <DashboardExercises fullPage />
+          <DashboardSearch dashboardType={DATA_TYPES.EXERCISE} bigCard />
         </Route>
         <Route path="/app/calendar">
           <Calendar />

@@ -10,10 +10,16 @@ import {
   Button,
   Alert,
 } from '@mui/material';
-import DashboardExercises from '../DashboardExercises/DashboardExercises';
+import DashboardSearch from '../DashboardSearch/DashboardSearch';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
-import ExerciseCards from '../ExerciseCards/ExerciseCards';
-import { fetchSaveWorkout } from '../../services/apiCalls';
+import MyCards from '../MyCards/MyCards';
+import {
+  CREDENTIALS,
+  ENDPOINTS,
+  fetchData,
+  HTTP_METHODS,
+} from '../../services/apiCalls';
+import DATA_TYPES from '../DataTypes';
 
 export default function Workouts() {
   const [, , exercise] = useExerciseCardContext();
@@ -56,7 +62,12 @@ export default function Workouts() {
       title: values.title,
       exercises,
     };
-    const res = await fetchSaveWorkout(data);
+    const res = await fetchData(
+      data,
+      HTTP_METHODS.POST,
+      ENDPOINTS.WORKOUT,
+      CREDENTIALS.INCLUDE,
+    );
     if (res.status === 200) {
       setSuccess(true);
       setTimeout(() => {
@@ -159,11 +170,15 @@ export default function Workouts() {
               </form>
             )}
           </Formik>
-          <ExerciseCards boxShadowColor="red" exercises={exercises} />
+          <MyCards
+            boxShadowColor="red"
+            cards={exercises}
+            dataType={DATA_TYPES.EXERCISE}
+          />
         </Container>
       </Box>
 
-      <DashboardExercises />
+      <DashboardSearch dashboardType={DATA_TYPES.EXERCISE} bigCard={false} />
     </>
   );
 }

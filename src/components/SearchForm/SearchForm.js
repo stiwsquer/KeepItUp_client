@@ -2,7 +2,7 @@ import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { TextField } from '@mui/material';
 
-export default function SearchExerciseForm({ handleChange }) {
+export default function SearchForm({ handleChange }) {
   return (
     <div
       style={{
@@ -24,7 +24,7 @@ export default function SearchExerciseForm({ handleChange }) {
       <TextField
         variant="outlined"
         fullWidth
-        label="Search for exercises"
+        label="Search"
         name="exercise"
         type="text"
         onChange={handleChange}

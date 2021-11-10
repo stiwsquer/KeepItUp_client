@@ -17,7 +17,12 @@ import {
 } from '@mui/material';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { fetchLogin } from '../../services/apiCalls';
+import {
+  CREDENTIALS,
+  ENDPOINTS,
+  fetchData,
+  HTTP_METHODS,
+} from '../../services/apiCalls';
 // import FacebookIcon from '../../icons/Facebook';
 // import GoogleIcon from '../../icons/Google';
 
@@ -26,8 +31,13 @@ export default function Login() {
   const [error, setError] = useState(false);
 
   const submit = async (values) => {
-    let res = await fetchLogin(values);
-    res = res ? history.push('/app') : setError(true);
+    let res = await fetchData(
+      values,
+      HTTP_METHODS.POST,
+      ENDPOINTS.LOGIN,
+      CREDENTIALS.INCLUDE,
+    );
+    res = res.status === 200 ? history.push('/app') : setError(true);
     return res;
   };
 
