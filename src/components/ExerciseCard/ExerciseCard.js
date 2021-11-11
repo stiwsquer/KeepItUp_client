@@ -50,6 +50,7 @@ export default function ExerciseCard({
         flex: bigCard ? '1 1 20rem' : '1 1 40rem',
         maxWidth: bigCard ? 345 : null,
         margin: '1rem',
+        border: `0.1rem solid rgba(86, 100, 210,1)`,
         ':hover': {
           transform: bigCard ? 'scale(1.1)' : 'scale(1)',
           boxShadow: boxShadowColor

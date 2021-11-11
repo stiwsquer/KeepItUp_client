@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import DATA_TYPES from '../DataTypes';
+import ClientCard from '../ClientCard/ClientCard';
 
 export default function MyCards({ cards, boxShadowColor, dataType }) {
   return (
@@ -23,6 +24,19 @@ export default function MyCards({ cards, boxShadowColor, dataType }) {
               bodyPart={card.bodyPart}
               equipment={card.equipment}
               target={card.target}
+              key={card.id}
+              id={card.id}
+            />
+          </>
+        ))}
+
+      {dataType === DATA_TYPES.CLIENT &&
+        cards.map((card) => (
+          <>
+            <ClientCard
+              email={card.email}
+              firstName={card.firstName}
+              lastName={card.lastName}
               key={card.id}
               id={card.id}
             />

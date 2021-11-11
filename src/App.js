@@ -8,6 +8,7 @@ import Layout from './components/Layout/Layout';
 import theme from './theme/index';
 import { DashboardSidebarContextProvider } from './Context/DashboardSidebarContext';
 import { ExerciseContextProvider } from './Context/ExerciseCardContext';
+import { ClientContextProvider } from './Context/ClientContext';
 
 function App() {
   return (
@@ -16,10 +17,12 @@ function App() {
         <ThemeProvider theme={theme}>
           <DashboardSidebarContextProvider>
             <ExerciseContextProvider>
-              <GlobalStyles />
-              <BrowserRouter>
-                <Layout />
-              </BrowserRouter>
+              <ClientContextProvider>
+                <GlobalStyles />
+                <BrowserRouter>
+                  <Layout />
+                </BrowserRouter>
+              </ClientContextProvider>
             </ExerciseContextProvider>
           </DashboardSidebarContextProvider>
         </ThemeProvider>

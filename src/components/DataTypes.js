@@ -1,7 +1,7 @@
 const DATA_TYPES = {
   EXERCISE: 'exercise',
   WORKOUT: 'workout',
-  USER: 'user',
+  CLIENT: 'client',
 };
 
 export default DATA_TYPES;
