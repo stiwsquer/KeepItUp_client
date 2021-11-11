@@ -21,6 +21,21 @@ export const CREDENTIALS = {
   NONE: null,
 };
 
+const fetchRefreshToken = async () => {
+  try {
+    const res = await fetch(`http://localhost:3001/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    console.log('REFRESHING THE ACCESS TOKEN');
+    console.log(res);
+    return res;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const fetchData = async (
   valuesToSave,
   httpMethod,
@@ -31,6 +46,9 @@ export const fetchData = async (
   limit,
   deleteCoach,
 ) => {
+  if (endpoint !== ENDPOINTS.LOGIN && endpoint !== ENDPOINTS.REGISTER)
+    fetchRefreshToken();
+
   try {
     const nameString = name || '';
     const pageString = page ? '?page=' : '';
