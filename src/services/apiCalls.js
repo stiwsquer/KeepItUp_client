@@ -13,6 +13,7 @@ export const ENDPOINTS = {
   VERIFY: 'verify',
   EXERCISE: 'exercise',
   WORKOUT: 'workout',
+  CLIENT: 'client',
 };
 
 export const CREDENTIALS = {
@@ -28,16 +29,19 @@ export const fetchData = async (
   name,
   page,
   limit,
+  deleteCoach,
 ) => {
   try {
     const nameString = name || '';
     const pageString = page ? '?page=' : '';
     const limitString = limit ? '&limit=' : '';
-    const pageNumber = page || '';
-    const limitNumber = limit || '';
+    const pageValue = page || '';
+    const limitValue = limit || '';
+    const deleteCoachString = deleteCoach ? '?deleteCoach=' : '';
+    const deleteCoachValue = deleteCoach || '';
 
     let res = await fetch(
-      `http://localhost:3001/${endpoint}/${nameString}${pageString}${pageNumber}${limitString}${limitNumber}`,
+      `http://localhost:3001/${endpoint}/${nameString}${pageString}${pageValue}${limitString}${limitValue}${deleteCoachString}${deleteCoachValue}`,
       {
         method: `${httpMethod}`,
         headers: { 'Content-Type': 'application/json' },
@@ -49,8 +53,14 @@ export const fetchData = async (
           : null,
       },
     );
-
-    res = httpMethod === HTTP_METHODS.POST ? res : await res.json();
+    if (
+      httpMethod === HTTP_METHODS.POST ||
+      httpMethod === HTTP_METHODS.PATCH ||
+      httpMethod === HTTP_METHODS.PUT
+    ) {
+      return res;
+    }
+    res = await res.json();
     return res;
   } catch (err) {
     return console.error(err);

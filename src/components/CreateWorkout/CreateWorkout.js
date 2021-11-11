@@ -70,11 +70,13 @@ export default function Workouts() {
     );
     if (res.status === 200) {
       setSuccess(true);
+      setError(false);
       setTimeout(() => {
         history.push('/app/calendar');
       }, 1000);
     } else {
       setError(true);
+      setSuccess(false);
     }
     return res;
   };

@@ -43,6 +43,9 @@ export default function AppRoute() {
         <Route path="/app/create-workout">
           <CreateWorkout />
         </Route>
+        <Route path="/app/clients">
+          <DashboardSearch dashboardType={DATA_TYPES.CLIENT} />
+        </Route>
       </Route>
     </>
   );
