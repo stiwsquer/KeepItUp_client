@@ -122,7 +122,9 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
               values={perPageValues}
             />
           </Box>
+
           <MyCards cards={searchedData} dataType={dashboardType} />
+
           <MyPagination
             nextPage={nextPage}
             prevPage={prevPage}

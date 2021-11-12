@@ -9,6 +9,7 @@ import theme from './theme/index';
 import { DashboardSidebarContextProvider } from './Context/DashboardSidebarContext';
 import { ExerciseContextProvider } from './Context/ExerciseCardContext';
 import { ClientContextProvider } from './Context/ClientContext';
+import { CalendarContextProvider } from './Context/CalendarContext';
 
 function App() {
   return (
@@ -18,10 +19,12 @@ function App() {
           <DashboardSidebarContextProvider>
             <ExerciseContextProvider>
               <ClientContextProvider>
-                <GlobalStyles />
-                <BrowserRouter>
-                  <Layout />
-                </BrowserRouter>
+                <CalendarContextProvider>
+                  <GlobalStyles />
+                  <BrowserRouter>
+                    <Layout />
+                  </BrowserRouter>
+                </CalendarContextProvider>
               </ClientContextProvider>
             </ExerciseContextProvider>
           </DashboardSidebarContextProvider>
