@@ -1,9 +1,10 @@
 import { CardActions, IconButton } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import ExpandMore from '../ExpandMore/ExpandMore';
 import { useCalendarContext } from '../../Context/CalendarContext';
+import { useAlertContext } from '../../Context/AlertContext';
 import {
   CREDENTIALS,
   ENDPOINTS,
@@ -16,33 +17,44 @@ export default function WorkoutCardActions({
   handleExpandClick,
   workoutId,
 }) {
-  const [, setWorkoutId, coachId, , clientId, , date] = useCalendarContext();
-
-  useEffect(() => {
-    setWorkoutId(workoutId);
-  }, []);
+  const [calendarData, handleCalendarData] = useCalendarContext();
+  const [, handleAlertData] = useAlertContext();
 
   const handleAddCalendarItem = async () => {
-    const newDate = new Date(date);
+    const newDate = new Date(calendarData.date);
     const year = newDate.getFullYear();
     const month = newDate.getUTCMonth() + 1;
     const day = newDate.getDate();
-    const formattedDate = `${year}-${month}-${day}`;
+    handleCalendarData({ date: `${year}-${month}-${day}`, workout: workoutId });
     const data = {
-      date: formattedDate,
-      coach: coachId,
-      client: clientId,
+      date: `${year}-${month}-${day}`,
       workout: workoutId,
+      coach: calendarData.coach,
+      client: calendarData.client,
     };
-    console.log(data);
+
     const res = await fetchData(
       data,
       HTTP_METHODS.POST,
       ENDPOINTS.CALENDAR,
       CREDENTIALS.INCLUDE,
     );
-
-    console.log(res);
+    if (res.status === 200) {
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: `Successfully added client's workout`,
+        timeout: 2000,
+      });
+    } else {
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'Something went wrong',
+        timeout: 2000,
+      });
+    }
+    return res;
   };
 
   return (
