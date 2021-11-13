@@ -5,7 +5,6 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
-import { useCalendarContext } from '../../Context/CalendarContext';
 import WorkoutCardActions from '../WorkoutCardActions/WorkoutCardActions';
 
 export default function WorkoutCard({
@@ -17,7 +16,6 @@ export default function WorkoutCard({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [, setBigCard] = useExerciseCardContext();
-  const [, setWorkoutId, , setCoachId] = useCalendarContext();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -25,8 +23,6 @@ export default function WorkoutCard({
 
   useEffect(() => {
     setBigCard(false);
-    setWorkoutId(id);
-    setCoachId(coach ? coach.id : null);
   }, []);
 
   return (
@@ -56,6 +52,7 @@ export default function WorkoutCard({
         <WorkoutCardActions
           expanded={expanded}
           handleExpandClick={handleExpandClick}
+          workoutId={id}
         />
       </Box>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

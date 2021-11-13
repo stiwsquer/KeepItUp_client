@@ -16,7 +16,7 @@ export default function MyDatePicker() {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <MobileDatePicker
           label="Date"
-          inputFormat="MM/dd/yyyy"
+          inputFormat="yyyy-MM-dd"
           value={date}
           onChange={handleDateChange}
           renderInput={(params) => <TextField {...params} />}
