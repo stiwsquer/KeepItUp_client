@@ -22,7 +22,7 @@ export default function ClientCard({ id, firstName, lastName, email }) {
   const [deleteClient, setDeleteClient] = useState(false);
   const [, toggleClient] = useClientContext();
   const [expanded, setExpanded] = useState(false);
-  const [, , , , clientId, setClientId] = useCalendarContext();
+  const [calendarData, handleCalendarData] = useCalendarContext();
   const [, handleAlertData] = useAlertContext();
 
   const handleExpandClick = () => {
@@ -30,8 +30,8 @@ export default function ClientCard({ id, firstName, lastName, email }) {
   };
 
   useEffect(() => {
-    if (id !== clientId) setExpanded(false);
-  }, [clientId]);
+    if (id !== calendarData.client) setExpanded(false);
+  }, [calendarData]);
 
   const toggleConfirmModalOpen = () => setOpenConfirmModal(!openConfirmModal);
 
@@ -86,7 +86,7 @@ export default function ClientCard({ id, firstName, lastName, email }) {
         border: `0.1rem solid rgba(86, 100, 210,1)`,
       }}
       onClick={() => {
-        setClientId(id);
+        handleCalendarData({ client: id });
       }}
     >
       <Box
@@ -121,7 +121,7 @@ export default function ClientCard({ id, firstName, lastName, email }) {
           message="Are you sure you want to delete the client?"
         />
       </Box>
-      <AddWorkoutToClient expanded={expanded} />
+      {expanded && <AddWorkoutToClient expanded={expanded} />}
     </Card>
   );
 }
