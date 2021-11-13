@@ -19,7 +19,8 @@ export const ENDPOINTS = {
 
 export const CREDENTIALS = {
   INCLUDE: 'include',
-  NONE: null,
+  SAME_ORIGIN: 'same-origin',
+  OMIT: 'omit',
 };
 
 const fetchRefreshToken = async () => {
@@ -64,7 +65,7 @@ export const fetchData = async (
       {
         method: `${httpMethod}`,
         headers: { 'Content-Type': 'application/json' },
-        credentials: `${credentials}`,
+        credentials: credentials ? `${credentials}` : CREDENTIALS.OMIT,
         body: valuesToSave
           ? JSON.stringify({
               ...valuesToSave,

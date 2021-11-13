@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
-  Alert,
+  // Alert,
   Box,
   Button,
   Container,
@@ -23,27 +23,41 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
+import { useAlertContext } from '../../Context/AlertContext';
 // import FacebookIcon from '../../icons/Facebook';
 // import GoogleIcon from '../../icons/Google';
 
 export default function Login() {
   const history = useHistory();
-  const [error, setError] = useState(false);
+  const [alert, handleAlertData] = useAlertContext();
 
   const submit = async (values) => {
-    let res = await fetchData(
+    const res = await fetchData(
       values,
       HTTP_METHODS.POST,
       ENDPOINTS.LOGIN,
       CREDENTIALS.INCLUDE,
     );
-    res = res.status === 200 ? history.push('/app') : setError(true);
+    if (res.status === 200) {
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: 'Successfully logged in',
+        timeout: 1500,
+      });
+      setTimeout(() => {
+        history.push('/app');
+      }, 1500);
+    } else {
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'Something went wrong',
+        timeout: 3000,
+      });
+    }
     return res;
   };
-
-  const errorMessage = (
-    <Alert severity="error">User with that credentials does not exist</Alert>
-  );
 
   return (
     <>
@@ -101,8 +115,7 @@ export default function Login() {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
-
-                {error && errorMessage}
+                {alert}
 
                 {/* <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>

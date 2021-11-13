@@ -15,13 +15,15 @@ import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import ClientCardActions from '../ClientCardActions/ClientCardActions';
 import AddWorkoutToClient from '../AddWorkoutToClient/AddWorkoutToClient';
 import { useCalendarContext } from '../../Context/CalendarContext';
+import { useAlertContext } from '../../Context/AlertContext';
 
 export default function ClientCard({ id, firstName, lastName, email }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [deleteClient, setDeleteClient] = useState(false);
-  const [, toggleClient, , setError, , setSuccess] = useClientContext();
+  const [, toggleClient] = useClientContext();
   const [expanded, setExpanded] = useState(false);
   const [, , , , clientId, setClientId] = useCalendarContext();
+  const [, handleAlertData] = useAlertContext();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -47,18 +49,20 @@ export default function ClientCard({ id, firstName, lastName, email }) {
     console.log(res);
 
     if (res.status === 200) {
-      setSuccess(true);
-      setError(false);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 2000);
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: 'Successfully deleted client',
+        timeout: 2000,
+      });
       toggleClient();
     } else {
-      setError(true);
-      setSuccess(false);
-      setTimeout(() => {
-        setError(false);
-      }, 2000);
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'Something went wrong',
+        timeout: 2000,
+      });
     }
   };
 

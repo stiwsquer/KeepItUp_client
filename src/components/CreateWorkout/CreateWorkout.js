@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {
-  Box,
-  Container,
-  TextField,
-  Typography,
-  Button,
-  Alert,
-} from '@mui/material';
+import { Box, Container, TextField, Typography, Button } from '@mui/material';
 import DashboardSearch from '../DashboardSearch/DashboardSearch';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 import MyCards from '../MyCards/MyCards';
@@ -20,24 +13,13 @@ import {
   HTTP_METHODS,
 } from '../../services/apiCalls';
 import DATA_TYPES from '../DataTypes';
+import { useAlertContext } from '../../Context/AlertContext';
 
 export default function Workouts() {
   const [, , exercise] = useExerciseCardContext();
   const [exercises, setExercises] = useState([]);
   const history = useHistory();
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const errorMessage = (
-    <Alert variant="outlined" severity="error">
-      Unable to create a workout
-    </Alert>
-  );
-  const successMessage = (
-    <Alert variant="outlined" severity="success">
-      Successfully created workout
-    </Alert>
-  );
+  const [alert, handleAlertData] = useAlertContext();
 
   useEffect(() => {
     if (exercise.delete) {
@@ -68,15 +50,24 @@ export default function Workouts() {
       ENDPOINTS.WORKOUT,
       CREDENTIALS.INCLUDE,
     );
+
     if (res.status === 200) {
-      setSuccess(true);
-      setError(false);
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: 'Successfully created workout',
+        timeout: 2000,
+      });
       setTimeout(() => {
-        history.push('/app/calendar');
-      }, 1000);
+        history.push('/app/clients');
+      }, 2000);
     } else {
-      setError(true);
-      setSuccess(false);
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'Unable to create a workout',
+        timeout: null,
+      });
     }
     return res;
   };
@@ -119,8 +110,7 @@ export default function Workouts() {
               values,
             }) => (
               <form onSubmit={handleSubmit}>
-                {error && errorMessage}
-                {success && successMessage}
+                {alert}
                 <Box
                   sx={{
                     my: 3,
