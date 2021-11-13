@@ -14,6 +14,7 @@ export const ENDPOINTS = {
   EXERCISE: 'exercise',
   WORKOUT: 'workout',
   CLIENT: 'client',
+  CALENDAR: 'calendar',
 };
 
 export const CREDENTIALS = {

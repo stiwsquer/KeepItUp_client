@@ -21,11 +21,15 @@ export default function ClientCard({ id, firstName, lastName, email }) {
   const [deleteClient, setDeleteClient] = useState(false);
   const [, toggleClient, , setError, , setSuccess] = useClientContext();
   const [expanded, setExpanded] = useState(false);
-  const [, , , , , setClientId] = useCalendarContext();
+  const [, , , , clientId, setClientId] = useCalendarContext();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    if (id !== clientId) setExpanded(false);
+  }, [clientId]);
 
   const toggleConfirmModalOpen = () => setOpenConfirmModal(!openConfirmModal);
 
@@ -59,10 +63,6 @@ export default function ClientCard({ id, firstName, lastName, email }) {
   };
 
   useEffect(() => {
-    setClientId(id);
-  }, []);
-
-  useEffect(() => {
     if (deleteClient) handleFetchDelete();
   }, [openConfirmModal, deleteClient]);
 
@@ -80,6 +80,9 @@ export default function ClientCard({ id, firstName, lastName, email }) {
         flex: '1 1 100rem',
         margin: '1rem',
         border: `0.1rem solid rgba(86, 100, 210,1)`,
+      }}
+      onClick={() => {
+        setClientId(id);
       }}
     >
       <Box
