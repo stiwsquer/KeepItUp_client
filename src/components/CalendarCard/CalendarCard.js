@@ -1,16 +1,6 @@
-import {
-  CardContent,
-  Typography,
-  Box,
-  Card,
-  CardHeader,
-  IconButton,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { CardContent, Typography, Box, Card, CardHeader } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandCard from '../ExpandCard/ExpandCard';
-import ExpandMore from '../ExpandMore/ExpandMore';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
 import {
   CREDENTIALS,
@@ -18,6 +8,7 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
+import CalendarCardActions from '../CalendarCardActions/CalendarCardActions';
 
 export default function CalendarCard({ id, workout, date }) {
   const [data, setData] = useState([]);
@@ -85,21 +76,11 @@ export default function CalendarCard({ id, workout, date }) {
             {workout.title}
           </Typography>
         </CardContent>
-        <ExpandMore
+        <CalendarCardActions
           expand={expanded}
-          onClick={handleExpandClick}
-          color="primary"
-        >
-          <AddIcon />
-        </ExpandMore>
-        <IconButton
-          sx={{ flex: 0 }}
-          onClick={handleFetchDelete}
-          size="large"
-          color="primary"
-        >
-          <DeleteIcon />
-        </IconButton>
+          handleExpandClick={handleExpandClick}
+          handleFetchDelete={handleFetchDelete}
+        />
       </Box>
       <ExpandCard expanded={expanded}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
