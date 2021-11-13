@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CardContent, Typography, Box, Card, CardHeader } from '@mui/material';
 
-import ExerciseCard from '../ExerciseCard/ExerciseCard';
-import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 import WorkoutCardActions from '../WorkoutCardActions/WorkoutCardActions';
 import ExpandCard from '../ExpandCard/ExpandCard';
+import WorkoutCardContent from '../WorkoutCardContent/WorkoutCardContent';
 
 export default function WorkoutCard({
   id,
@@ -15,15 +14,10 @@ export default function WorkoutCard({
   disableAddButton,
 }) {
   const [expanded, setExpanded] = useState(false);
-  const [, setBigCard] = useExerciseCardContext();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  useEffect(() => {
-    setBigCard(false);
-  }, []);
 
   return (
     <Card
@@ -57,23 +51,7 @@ export default function WorkoutCard({
         />
       </Box>
       <ExpandCard expanded={expanded}>
-        <Typography paragraph>Description:</Typography>
-        <Typography paragraph>{description}</Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-          {exercises.map((card) => (
-            <>
-              <ExerciseCard
-                title={card.name}
-                url={card.url}
-                bodyPart={card.bodyPart}
-                equipment={card.equipment}
-                target={card.target}
-                key={card.id}
-                id={card.id}
-              />
-            </>
-          ))}
-        </Box>
+        <WorkoutCardContent exercises={exercises} description={description} />
       </ExpandCard>
     </Card>
   );
