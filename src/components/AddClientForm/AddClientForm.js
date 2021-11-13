@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Alert, Button, TextField, Typography, Box } from '@mui/material';
+import { Button, TextField, Typography, Box } from '@mui/material';
 import {
   CREDENTIALS,
   ENDPOINTS,
@@ -9,10 +9,10 @@ import {
   HTTP_METHODS,
 } from '../../services/apiCalls';
 import { useClientContext } from '../../Context/ClientContext';
+import { useAlertContext } from '../../Context/AlertContext';
 
 export default function AddClientForm() {
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [alert, handleAlertData] = useAlertContext();
   const [, toggleClient] = useClientContext();
 
   const submit = async (values) => {
@@ -26,22 +26,23 @@ export default function AddClientForm() {
     console.log(res);
 
     if (res.status === 200) {
-      setSuccess(true);
-      setError(false);
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: 'Successfully added client',
+        timeout: 2000,
+      });
       toggleClient();
     } else {
-      setError(true);
-      setSuccess(false);
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'Something went wrong',
+        timeout: 2000,
+      });
     }
     return res;
   };
-
-  const errorMessage = <Alert severity="error">Something went wrong</Alert>;
-  const successMessage = (
-    <Alert variant="outlined" severity="success">
-      Successfully added client
-    </Alert>
-  );
 
   return (
     <Formik
@@ -78,8 +79,7 @@ export default function AddClientForm() {
               Add client to your list
             </Typography>
           </Box>
-          {error && errorMessage}
-          {success && successMessage}
+          {alert}
           <TextField
             id="email"
             label="Email Address"

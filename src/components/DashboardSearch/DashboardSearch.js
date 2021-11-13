@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Box, Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import debounce from 'lodash.debounce';
 import MyCards from '../MyCards/MyCards';
 import SearchForm from '../SearchForm/SearchForm';
@@ -15,6 +15,7 @@ import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 import DATA_TYPES from '../DataTypes';
 import AddClient from '../AddClient/AddClient';
 import { useClientContext } from '../../Context/ClientContext';
+import { useAlertContext } from '../../Context/AlertContext';
 
 export default function DashboardSearch({ dashboardType, bigCard }) {
   const [searchedData, setSearchedData] = useState([]);
@@ -25,7 +26,8 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
   const [prevPage, setPrevPage] = useState(false);
   const perPageValues = [20, 50, 100, 200];
   const [, setBigCard] = useExerciseCardContext();
-  const [client, , error, , success] = useClientContext();
+  const [client] = useClientContext();
+  const [alert] = useAlertContext();
 
   const handleFetchData = async () => {
     let endpoint;
@@ -52,17 +54,6 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
       console.error(err.message);
     }
   };
-
-  const errorMessage = (
-    <Alert sx={{ mt: 4 }} fullWidth severity="error">
-      Something went wrong
-    </Alert>
-  );
-  const successMessage = (
-    <Alert sx={{ mt: 4 }} fullWidth variant="outlined" severity="success">
-      Successfully deleted client
-    </Alert>
-  );
 
   const handleLimitChange = (e) => {
     setLimit(e.target.value);
@@ -111,8 +102,7 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
         }}
       >
         <Container maxWidth="xl">
-          {dashboardType === DATA_TYPES.CLIENT && error && errorMessage}
-          {dashboardType === DATA_TYPES.CLIENT && success && successMessage}
+          {alert}
           <Box sx={{ margin: '2rem 0', display: 'flex', alignItems: 'center' }}>
             <SearchForm handleChange={debouncedHandleChange} />
             {dashboardType === DATA_TYPES.CLIENT ? <AddClient /> : null}

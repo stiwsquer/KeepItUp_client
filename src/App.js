@@ -10,6 +10,7 @@ import { DashboardSidebarContextProvider } from './Context/DashboardSidebarConte
 import { ExerciseContextProvider } from './Context/ExerciseCardContext';
 import { ClientContextProvider } from './Context/ClientContext';
 import { CalendarContextProvider } from './Context/CalendarContext';
+import { AlertContextProvider } from './Context/AlertContext';
 
 function App() {
   return (
@@ -20,10 +21,12 @@ function App() {
             <ExerciseContextProvider>
               <ClientContextProvider>
                 <CalendarContextProvider>
-                  <GlobalStyles />
-                  <BrowserRouter>
-                    <Layout />
-                  </BrowserRouter>
+                  <AlertContextProvider>
+                    <GlobalStyles />
+                    <BrowserRouter>
+                      <Layout />
+                    </BrowserRouter>
+                  </AlertContextProvider>
                 </CalendarContextProvider>
               </ClientContextProvider>
             </ExerciseContextProvider>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -17,24 +17,39 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Alert,
 } from '@mui/material';
 import { ENDPOINTS, fetchData, HTTP_METHODS } from '../../services/apiCalls';
+import { useAlertContext } from '../../Context/AlertContext';
 
 export default function Register() {
   const history = useHistory();
-  const [error, setError] = useState(false);
+  const [alert, handleAlertData] = useAlertContext();
 
   const submit = async (values) => {
-    let res = await fetchData(values, HTTP_METHODS.POST, ENDPOINTS.REGISTER);
+    const res = await fetchData(values, HTTP_METHODS.POST, ENDPOINTS.REGISTER);
     console.log(res);
-    res = res ? history.push('/login') : setError(true);
+    if (res.status === 200) {
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: 'Successfully register',
+        timeout: 2000,
+      });
+      setTimeout(() => {
+        history.push('/login');
+      }, 2000);
+    } else {
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'User with that email already exists',
+        timeout: 3000,
+      });
+    }
+
     return res;
   };
 
-  const errorMessage = (
-    <Alert severity="error">User with that email already exists</Alert>
-  );
   return (
     <>
       <Helmet>
@@ -99,7 +114,7 @@ export default function Register() {
                     Use your email to create new account
                   </Typography>
                 </Box>
-                {error && errorMessage}
+                {alert}
                 <TextField
                   id="firstName"
                   label="First name"
