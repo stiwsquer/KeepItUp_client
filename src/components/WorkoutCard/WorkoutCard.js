@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { CardContent, Typography, Collapse, Box } from '@mui/material';
+import { CardContent, Typography, Box, Card, CardHeader } from '@mui/material';
 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 import WorkoutCardActions from '../WorkoutCardActions/WorkoutCardActions';
+import ExpandCard from '../ExpandCard/ExpandCard';
 
 export default function WorkoutCard({
   id,
@@ -13,6 +12,7 @@ export default function WorkoutCard({
   description,
   exercises,
   coach,
+  disableAddButton,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [, setBigCard] = useExerciseCardContext();
@@ -53,29 +53,28 @@ export default function WorkoutCard({
           expanded={expanded}
           handleExpandClick={handleExpandClick}
           workoutId={id}
+          disableAddButton={disableAddButton}
         />
       </Box>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Description:</Typography>
-          <Typography paragraph>{description}</Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-            {exercises.map((card) => (
-              <>
-                <ExerciseCard
-                  title={card.name}
-                  url={card.url}
-                  bodyPart={card.bodyPart}
-                  equipment={card.equipment}
-                  target={card.target}
-                  key={card.id}
-                  id={card.id}
-                />
-              </>
-            ))}
-          </Box>
-        </CardContent>
-      </Collapse>
+      <ExpandCard expanded={expanded}>
+        <Typography paragraph>Description:</Typography>
+        <Typography paragraph>{description}</Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+          {exercises.map((card) => (
+            <>
+              <ExerciseCard
+                title={card.name}
+                url={card.url}
+                bodyPart={card.bodyPart}
+                equipment={card.equipment}
+                target={card.target}
+                key={card.id}
+                id={card.id}
+              />
+            </>
+          ))}
+        </Box>
+      </ExpandCard>
     </Card>
   );
 }

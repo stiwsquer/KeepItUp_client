@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { CardContent, Collapse, Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import debounce from 'lodash.debounce';
 import SearchForm from '../SearchForm/SearchForm';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
@@ -10,12 +10,17 @@ import {
   HTTP_METHODS,
 } from '../../services/apiCalls';
 import MyDatePicker from '../MyDatePicker/MyDatePicker';
+import ExpandCard from '../ExpandCard/ExpandCard';
 
-export default function AddWorkoutToClient({ expanded }) {
+export default function SearchWorkouts() {
   const [searchedData, setSearchedData] = useState([]);
   const [searchedValue, setSearchedValue] = useState('');
+  const [expanded, setExpanded] = useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-  const handleFetchData = async () => {
+  const handleFetchWorkoutsData = async () => {
     try {
       const res = await fetchData(
         null,
@@ -40,7 +45,7 @@ export default function AddWorkoutToClient({ expanded }) {
   const debouncedHandleChange = useMemo(() => debounce(handleChange, 300), []);
 
   useEffect(() => {
-    handleFetchData();
+    handleFetchWorkoutsData();
     console.log(searchedData);
   }, [searchedValue]);
 
@@ -51,8 +56,17 @@ export default function AddWorkoutToClient({ expanded }) {
     [],
   );
   return (
-    <Collapse in={expanded} timeout="auto" unmountOnExit>
-      <CardContent>
+    <>
+      <Button
+        sx={{ mb: 1 }}
+        variant="contained"
+        color="primary"
+        onClick={handleExpandClick}
+        fullWidth
+      >
+        Add Workout
+      </Button>
+      <ExpandCard expanded={expanded}>
         <Box sx={{ display: 'flex' }}>
           <SearchForm handleChange={debouncedHandleChange} />
           <MyDatePicker />
@@ -69,7 +83,7 @@ export default function AddWorkoutToClient({ expanded }) {
             />
           </>
         ))}
-      </CardContent>
-    </Collapse>
+      </ExpandCard>
+    </>
   );
 }

@@ -13,6 +13,7 @@ export const ENDPOINTS = {
   VERIFY: 'verify',
   EXERCISE: 'exercise',
   WORKOUT: 'workout',
+  WORKOUT_ID: 'workout/id',
   CLIENT: 'client',
   CALENDAR: 'calendar',
 };
@@ -30,8 +31,6 @@ const fetchRefreshToken = async () => {
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
     });
-    console.log('REFRESHING THE ACCESS TOKEN');
-    console.log(res);
     return res;
   } catch (err) {
     return console.error(err);

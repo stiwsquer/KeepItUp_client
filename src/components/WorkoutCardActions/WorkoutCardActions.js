@@ -16,6 +16,7 @@ export default function WorkoutCardActions({
   expanded,
   handleExpandClick,
   workoutId,
+  disableAddButton,
 }) {
   const [calendarData, handleCalendarData] = useCalendarContext();
   const [, handleAlertData] = useAlertContext();
@@ -62,14 +63,16 @@ export default function WorkoutCardActions({
       <ExpandMore expand={expanded} onClick={handleExpandClick} color="primary">
         <DirectionsRunIcon />
       </ExpandMore>
-      <IconButton
-        sx={{ flex: 0 }}
-        onClick={handleAddCalendarItem}
-        size="large"
-        color="primary"
-      >
-        <AddIcon />
-      </IconButton>
+      {!disableAddButton && (
+        <IconButton
+          sx={{ flex: 0 }}
+          onClick={handleAddCalendarItem}
+          size="large"
+          color="primary"
+        >
+          <AddIcon />
+        </IconButton>
+      )}
     </CardActions>
   );
 }

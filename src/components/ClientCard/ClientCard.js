@@ -13,9 +13,11 @@ import {
 import { useClientContext } from '../../Context/ClientContext';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import ClientCardActions from '../ClientCardActions/ClientCardActions';
-import AddWorkoutToClient from '../AddWorkoutToClient/AddWorkoutToClient';
+import SearchWorkouts from '../SearchWorkouts/SearchWorkouts';
 import { useCalendarContext } from '../../Context/CalendarContext';
 import { useAlertContext } from '../../Context/AlertContext';
+import ExpandCard from '../ExpandCard/ExpandCard';
+import ClientCalendars from '../ClientCalendars/ClientCalendars';
 
 export default function ClientCard({ id, firstName, lastName, email }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -28,10 +30,6 @@ export default function ClientCard({ id, firstName, lastName, email }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  useEffect(() => {
-    if (id !== calendarData.client) setExpanded(false);
-  }, [calendarData]);
 
   const toggleConfirmModalOpen = () => setOpenConfirmModal(!openConfirmModal);
 
@@ -65,6 +63,27 @@ export default function ClientCard({ id, firstName, lastName, email }) {
       });
     }
   };
+
+  const [data, setData] = useState([]);
+  const handleFetchCalendarData = async () => {
+    try {
+      const res = await fetchData(
+        null,
+        HTTP_METHODS.GET,
+        ENDPOINTS.CALENDAR,
+        CREDENTIALS.INCLUDE,
+        id,
+      );
+      setData(res.results);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (id !== calendarData.client) setExpanded(false);
+    handleFetchCalendarData();
+  }, [calendarData]);
 
   useEffect(() => {
     if (deleteClient) handleFetchDelete();
@@ -121,7 +140,12 @@ export default function ClientCard({ id, firstName, lastName, email }) {
           message="Are you sure you want to delete the client?"
         />
       </Box>
-      {expanded && <AddWorkoutToClient expanded={expanded} />}
+      {expanded && (
+        <ExpandCard expanded={expanded}>
+          <ClientCalendars data={data} clientId={id} />
+          <SearchWorkouts />
+        </ExpandCard>
+      )}
     </Card>
   );
 }
