@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import StaticDatePicker from '@mui/lab/StaticDatePicker';
 import { isPast } from 'date-fns';
 
-export default function CustomDay() {
-  const [date, setDate] = useState(new Date());
-
+export default function Calendar({ date, handleDateChange }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StaticDatePicker
         // displayStaticWrapperAs="desktop"
-        label="Data picker"
+        label="Calendar"
         value={date}
-        onChange={(newValue) => {
-          setDate(newValue);
-        }}
-        backgroundColor="primary"
+        onChange={handleDateChange}
         shouldDisableDate={isPast}
         renderInput={(params) => <TextField {...params} />}
       />

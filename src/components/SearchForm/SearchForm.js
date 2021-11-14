@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { TextField } from '@mui/material';
+import { Hidden, TextField } from '@mui/material';
 
 export default function SearchForm({ handleChange }) {
   return (
@@ -10,16 +10,18 @@ export default function SearchForm({ handleChange }) {
         position: 'relative',
       }}
     >
-      <SearchIcon
-        fontSize="large"
-        style={{
-          position: 'absolute',
-          right: 20,
-          top: '50%',
-          transform: 'translateY(-50%)',
-        }}
-        color="primary"
-      />
+      <Hidden smDown>
+        <SearchIcon
+          fontSize="large"
+          style={{
+            position: 'absolute',
+            right: 20,
+            top: '50%',
+            transform: 'translateY(-50%)',
+          }}
+          color="primary"
+        />
+      </Hidden>
 
       <TextField
         variant="outlined"

@@ -1,4 +1,11 @@
-import { CardContent, Typography, Box, Card, CardHeader } from '@mui/material';
+import {
+  CardContent,
+  Typography,
+  Box,
+  Card,
+  CardHeader,
+  Hidden,
+} from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import ExpandCard from '../ExpandCard/ExpandCard';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
@@ -7,12 +14,15 @@ import {
   ENDPOINTS,
   fetchData,
   HTTP_METHODS,
+  ROLES,
 } from '../../services/apiCalls';
 import MyCardActions from '../MyCardActions/MyCardActions';
+import { useUserContext } from '../../Context/UserContext';
 
-export default function CalendarCard({ id, workout, date }) {
+export default function CalendarCard({ id, workout, date, client }) {
   const [data, setData] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const [user] = useUserContext();
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -53,6 +63,12 @@ export default function CalendarCard({ id, workout, date }) {
     handleFetchWorkout();
   }, []);
 
+  const titleToDisplay = () => {
+    if (user.role === ROLES.CLIENT) {
+      return `${user.coach.firstName} ${user.coach.lastName}`;
+    }
+    return client ? `${client.firstName} ${client.lastName}` : date;
+  };
   return (
     <Card
       key={id}
@@ -60,7 +76,7 @@ export default function CalendarCard({ id, workout, date }) {
         display: 'flex',
         flexDirection: 'column',
         flex: '1 1 100rem',
-        margin: '1rem',
+        margin: '1rem 0.5rem',
         border: `0.1rem solid rgba(86, 100, 210,1)`,
       }}
     >
@@ -70,12 +86,14 @@ export default function CalendarCard({ id, workout, date }) {
           flexDirection: 'row',
         }}
       >
-        <CardHeader sx={{ flex: 1 }} title={date} />
-        <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-          <Typography variant="caption" color="text.secondary">
-            {workout.title}
-          </Typography>
-        </CardContent>
+        <CardHeader sx={{ flex: 1 }} title={titleToDisplay()} />
+        <Hidden smDown>
+          <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+            <Typography variant="caption" color="text.secondary">
+              {workout.title}
+            </Typography>
+          </CardContent>
+        </Hidden>
         <MyCardActions
           expand={expanded}
           handleExpandClick={handleExpandClick}

@@ -16,6 +16,8 @@ export const ENDPOINTS = {
   WORKOUT_ID: 'workout/id',
   CLIENT: 'client',
   CALENDAR: 'calendar',
+  CALENDAR_CLIENT: 'calendar/client',
+  CALENDAR_DATE: 'calendar/date',
   USER: 'user',
 };
 

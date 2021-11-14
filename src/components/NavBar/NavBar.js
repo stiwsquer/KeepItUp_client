@@ -22,10 +22,8 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
       ENDPOINTS.LOGOUT,
       CREDENTIALS.INCLUDE,
     );
-    console.log(res);
-    if (res.status === 200) {
-      setUser({});
-    }
+    console.log(res.status);
+    setUser({});
   };
 
   return (

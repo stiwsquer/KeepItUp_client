@@ -28,8 +28,6 @@ export default function ClientCalendars({ data }) {
               <CalendarCard
                 key={card.id}
                 id={card.id}
-                client={card.client}
-                coach={card.coach}
                 workout={card.workout}
                 date={card.date}
               />

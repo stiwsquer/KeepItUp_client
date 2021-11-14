@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Hidden } from '@mui/material';
 import debounce from 'lodash.debounce';
 import SearchForm from '../SearchForm/SearchForm';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
+
 import {
   CREDENTIALS,
   ENDPOINTS,
@@ -67,10 +68,18 @@ export default function SearchWorkouts() {
         Add Workout
       </Button>
       <ExpandCard expanded={expanded}>
-        <Box sx={{ display: 'flex' }}>
-          <SearchForm handleChange={debouncedHandleChange} />
-          <MyDatePicker />
-        </Box>
+        <Hidden smDown>
+          <Box sx={{ display: 'flex' }}>
+            <SearchForm handleChange={debouncedHandleChange} />
+            <MyDatePicker />
+          </Box>
+        </Hidden>
+        <Hidden smUp>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <SearchForm handleChange={debouncedHandleChange} />
+            <MyDatePicker />
+          </Box>
+        </Hidden>
         {searchedData.map((card) => (
           <>
             <WorkoutCard

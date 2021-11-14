@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import Calendar from '../Calendar/Calendar';
 import DashboardSearch from '../DashboardSearch/DashboardSearch';
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
 import { ROLES } from '../../services/apiCalls';
 import CreateWorkout from '../CreateWorkout/CreateWorkout';
 import DATA_TYPES from '../DataTypes';
 import { useUserContext } from '../../Context/UserContext';
+import DashboardCalendar from '../DashboardCalendar/DashboardCalendar';
 
 export default function AppRoute() {
   const [user] = useUserContext();
@@ -23,7 +23,7 @@ export default function AppRoute() {
           <DashboardSearch dashboardType={DATA_TYPES.EXERCISE} bigCard />
         </Route>
         <Route path="/app/calendar">
-          <Calendar />
+          <DashboardCalendar />
         </Route>
         {user.role === ROLES.COACH && (
           <>
