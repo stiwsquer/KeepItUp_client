@@ -8,7 +8,7 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
-import CalendarCardActions from '../CalendarCardActions/CalendarCardActions';
+import MyCardActions from '../MyCardActions/MyCardActions';
 
 export default function CalendarCard({ id, workout, date }) {
   const [data, setData] = useState([]);
@@ -76,10 +76,11 @@ export default function CalendarCard({ id, workout, date }) {
             {workout.title}
           </Typography>
         </CardContent>
-        <CalendarCardActions
+        <MyCardActions
           expand={expanded}
           handleExpandClick={handleExpandClick}
-          handleFetchDelete={handleFetchDelete}
+          handleDeleteClick={handleFetchDelete}
+          cardType={ENDPOINTS.CALENDAR}
         />
       </Box>
       <ExpandCard expanded={expanded}>

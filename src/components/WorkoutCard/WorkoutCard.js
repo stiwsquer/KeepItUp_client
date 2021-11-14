@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { CardContent, Typography, Box, Card, CardHeader } from '@mui/material';
-
-import WorkoutCardActions from '../WorkoutCardActions/WorkoutCardActions';
 import ExpandCard from '../ExpandCard/ExpandCard';
 import WorkoutCardContent from '../WorkoutCardContent/WorkoutCardContent';
+import MyCardActions from '../MyCardActions/MyCardActions';
+import { ENDPOINTS } from '../../services/apiCalls';
 
 export default function WorkoutCard({
   id,
@@ -43,11 +43,12 @@ export default function WorkoutCard({
           </Typography>
         </CardContent>
 
-        <WorkoutCardActions
+        <MyCardActions
           expanded={expanded}
           handleExpandClick={handleExpandClick}
           workoutId={id}
           disableAddButton={disableAddButton}
+          cardType={ENDPOINTS.WORKOUT}
         />
       </Box>
       <ExpandCard expanded={expanded}>

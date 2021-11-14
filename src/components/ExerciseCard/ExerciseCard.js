@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import MyCardContent from '../MyCardContent/MyCardContent';
+import ExerciseCardContent from '../ExerciseCardContent/ExerciseCardContent';
 import ExerciseCardMedia from '../ExerciseCardMedia/ExerciseCardMedia';
 import ExerciseCardModal from '../ExerciseCardModal/ExerciseCardModal';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
@@ -22,7 +22,7 @@ export default function ExerciseCard({
   const bigCardContent = (
     <>
       <ExerciseCardMedia url={url} />
-      <MyCardContent
+      <ExerciseCardContent
         bodyPart={bodyPart}
         equipment={equipment}
         target={target}

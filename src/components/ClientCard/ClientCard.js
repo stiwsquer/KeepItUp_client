@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { CardContent, Typography, Avatar, Box } from '@mui/material';
-
-// import debounce from 'lodash.debounce';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import {
@@ -12,12 +10,12 @@ import {
 } from '../../services/apiCalls';
 import { useClientContext } from '../../Context/ClientContext';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
-import ClientCardActions from '../ClientCardActions/ClientCardActions';
 import SearchWorkouts from '../SearchWorkouts/SearchWorkouts';
 import { useCalendarContext } from '../../Context/CalendarContext';
 import { useAlertContext } from '../../Context/AlertContext';
 import ExpandCard from '../ExpandCard/ExpandCard';
 import ClientCalendars from '../ClientCalendars/ClientCalendars';
+import MyCardActions from '../MyCardActions/MyCardActions';
 
 export default function ClientCard({ id, firstName, lastName, email }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -128,10 +126,11 @@ export default function ClientCard({ id, firstName, lastName, email }) {
             {email}
           </Typography>
         </CardContent>
-        <ClientCardActions
+        <MyCardActions
           expanded={expanded}
           handleExpandClick={handleExpandClick}
           handleDeleteClick={handleDeleteClick}
+          cardType={ENDPOINTS.CLIENT}
         />
         <ConfirmModal
           setDelete={setDeleteClient}
