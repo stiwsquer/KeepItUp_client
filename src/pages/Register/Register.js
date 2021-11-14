@@ -32,7 +32,7 @@ export default function Register() {
       handleAlertData({
         severity: 'success',
         displayAlert: true,
-        message: 'Successfully register',
+        message: 'Successfully registered',
         timeout: 2000,
       });
       setTimeout(() => {

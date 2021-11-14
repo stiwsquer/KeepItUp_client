@@ -5,7 +5,7 @@ const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(45deg)',
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',
 }));
 
