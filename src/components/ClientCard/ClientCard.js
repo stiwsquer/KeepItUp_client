@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CardContent, Typography, Avatar, Box } from '@mui/material';
+import { CardContent, Typography, Avatar, Box, Hidden } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import {
@@ -68,7 +68,7 @@ export default function ClientCard({ id, firstName, lastName, email }) {
       const res = await fetchData(
         null,
         HTTP_METHODS.GET,
-        ENDPOINTS.CALENDAR,
+        ENDPOINTS.CALENDAR_CLIENT,
         CREDENTIALS.INCLUDE,
         id,
       );
@@ -99,7 +99,7 @@ export default function ClientCard({ id, firstName, lastName, email }) {
         display: 'flex',
         flexDirection: 'column',
         flex: '1 1 100rem',
-        margin: '1rem',
+        my: '1rem',
         border: `0.1rem solid rgba(86, 100, 210,1)`,
       }}
       onClick={() => {
@@ -112,15 +112,17 @@ export default function ClientCard({ id, firstName, lastName, email }) {
           flexDirection: 'row',
         }}
       >
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: 'rgba(86, 100, 210,1)' }}>
-              {firstName[0]}
-            </Avatar>
-          }
-          sx={{ flex: 1 }}
-          title={`${firstName} ${lastName}`}
-        />
+        <Hidden smDown>
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: 'rgba(86, 100, 210,1)' }}>
+                {firstName[0]}
+              </Avatar>
+            }
+            sx={{ flex: 1 }}
+            title={`${firstName} ${lastName}`}
+          />
+        </Hidden>
         <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
           <Typography variant="caption" color="text.secondary">
             {email}

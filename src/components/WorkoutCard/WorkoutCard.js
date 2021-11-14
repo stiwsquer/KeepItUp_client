@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { CardContent, Typography, Box, Card, CardHeader } from '@mui/material';
+import {
+  CardContent,
+  Typography,
+  Box,
+  Card,
+  CardHeader,
+  Hidden,
+} from '@mui/material';
 import ExpandCard from '../ExpandCard/ExpandCard';
 import WorkoutCardContent from '../WorkoutCardContent/WorkoutCardContent';
 import MyCardActions from '../MyCardActions/MyCardActions';
@@ -26,7 +33,7 @@ export default function WorkoutCard({
         display: 'flex',
         flexDirection: 'column',
         flex: '1 1 100rem',
-        margin: '1rem',
+        margin: '1rem 0rem',
         border: `0.1rem solid rgba(86, 100, 210,1)`,
       }}
     >
@@ -37,12 +44,13 @@ export default function WorkoutCard({
         }}
       >
         <CardHeader sx={{ flex: 1 }} title={title} />
-        <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-          <Typography variant="caption" color="text.secondary">
-            {coach ? coach.email : 'Template'}
-          </Typography>
-        </CardContent>
-
+        <Hidden smDown>
+          <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+            <Typography variant="caption" color="text.secondary">
+              {coach ? coach.email : 'Template'}
+            </Typography>
+          </CardContent>
+        </Hidden>
         <MyCardActions
           expanded={expanded}
           handleExpandClick={handleExpandClick}
@@ -51,9 +59,11 @@ export default function WorkoutCard({
           cardType={ENDPOINTS.WORKOUT}
         />
       </Box>
-      <ExpandCard expanded={expanded}>
-        <WorkoutCardContent exercises={exercises} description={description} />
-      </ExpandCard>
+      <Hidden smDown>
+        <ExpandCard expanded={expanded}>
+          <WorkoutCardContent exercises={exercises} description={description} />
+        </ExpandCard>
+      </Hidden>
     </Card>
   );
 }

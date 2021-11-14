@@ -26,20 +26,22 @@ export default function DashboardSidebarList() {
           marginTop: 10,
         }}
       >
-        <Avatar sx={{ width: 64, height: 64 }}>{user.firstName[0]}</Avatar>
+        <Avatar sx={{ width: 64, height: 64 }}>
+          {user.firstName ? user.firstName[0] : ''}
+        </Avatar>
         <Typography
           variant="h4"
           color="textPrimary"
           sx={{ marginTop: 1, marginBottom: 1 }}
         >
-          {user.firstName}
+          {user.firstName ? user.firstName : ''}
         </Typography>
         <Typography
           variant="body2"
           color="textSecondary"
           sx={{ marginBottom: 1 }}
         >
-          {user.role}
+          {user.role ? user.role : ''}
         </Typography>
       </Box>
       <Divider />

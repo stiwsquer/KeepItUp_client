@@ -1,4 +1,4 @@
-import { CardActions, IconButton } from '@mui/material';
+import { CardActions, Hidden, IconButton } from '@mui/material';
 import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,6 +13,7 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
+import formatDate from '../FormatDate/FormatDate';
 
 export default function MyCardActions({
   expanded,
@@ -26,13 +27,10 @@ export default function MyCardActions({
   const [, handleAlertData] = useAlertContext();
 
   const handleAddCalendarItem = async () => {
-    const newDate = new Date(calendarData.date);
-    const year = newDate.getFullYear();
-    const month = newDate.getUTCMonth() + 1;
-    const day = newDate.getDate();
-    handleCalendarData({ date: `${year}-${month}-${day}`, workout: workoutId });
+    const formattedDate = formatDate(calendarData.date);
+    handleCalendarData({ date: formattedDate, workout: workoutId });
     const data = {
-      date: `${year}-${month}-${day}`,
+      date: formattedDate,
       workout: workoutId,
       coach: calendarData.coach,
       client: calendarData.client,
@@ -62,16 +60,24 @@ export default function MyCardActions({
     return res;
   };
 
+  const expandMoreOptions = (
+    <ExpandMore expand={expanded} onClick={handleExpandClick} color="primary">
+      <ExpandMoreIcon />
+    </ExpandMore>
+  );
   return (
     <CardActions>
-      <ExpandMore expand={expanded} onClick={handleExpandClick} color="primary">
-        <ExpandMoreIcon />
-      </ExpandMore>
+      {cardType === ENDPOINTS.CLIENT ? (
+        expandMoreOptions
+      ) : (
+        <Hidden smDown>{expandMoreOptions}</Hidden>
+      )}
+
       {cardType === ENDPOINTS.WORKOUT && !disableAddButton && (
         <IconButton
           sx={{ flex: 0 }}
           onClick={handleAddCalendarItem}
-          size="large"
+          size="small"
           color="primary"
         >
           <AddIcon />

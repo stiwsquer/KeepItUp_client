@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
+import { Hidden } from '@mui/material';
 import CardHeader from '@mui/material/CardHeader';
 import ExerciseCardContent from '../ExerciseCardContent/ExerciseCardContent';
 import ExerciseCardMedia from '../ExerciseCardMedia/ExerciseCardMedia';
@@ -64,7 +65,7 @@ export default function ExerciseCard({
       }}
     >
       <CardHeader title={title} />
-      {bigCard ? bigCardContent : null}
+      <Hidden smDown>{bigCard ? bigCardContent : null}</Hidden>
     </Card>
   );
 }
