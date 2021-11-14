@@ -1,31 +1,16 @@
-import React, { useEffect } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Calendar from '../Calendar/Calendar';
 import DashboardSearch from '../DashboardSearch/DashboardSearch';
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
-import {
-  CREDENTIALS,
-  ENDPOINTS,
-  fetchData,
-  HTTP_METHODS,
-} from '../../services/apiCalls';
+import { ROLES } from '../../services/apiCalls';
 import CreateWorkout from '../CreateWorkout/CreateWorkout';
 import DATA_TYPES from '../DataTypes';
+import { useUserContext } from '../../Context/UserContext';
 
 export default function AppRoute() {
-  const history = useHistory();
-
-  useEffect(async () => {
-    const res = await fetchData(
-      null,
-      HTTP_METHODS.POST,
-      ENDPOINTS.VERIFY,
-      CREDENTIALS.INCLUDE,
-    );
-    console.log(res);
-    if (res.status !== 200) history.push('/');
-  }, []);
+  const [user] = useUserContext();
 
   return (
     <>
@@ -40,12 +25,16 @@ export default function AppRoute() {
         <Route path="/app/calendar">
           <Calendar />
         </Route>
-        <Route path="/app/create-workout">
-          <CreateWorkout />
-        </Route>
-        <Route path="/app/clients">
-          <DashboardSearch dashboardType={DATA_TYPES.CLIENT} />
-        </Route>
+        {user.role === ROLES.COACH && (
+          <>
+            <Route path="/app/create-workout">
+              <CreateWorkout />
+            </Route>
+            <Route path="/app/clients">
+              <DashboardSearch dashboardType={DATA_TYPES.CLIENT} />
+            </Route>
+          </>
+        )}
       </Route>
     </>
   );

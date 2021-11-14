@@ -11,6 +11,7 @@ import { ExerciseContextProvider } from './Context/ExerciseCardContext';
 import { ClientContextProvider } from './Context/ClientContext';
 import { CalendarContextProvider } from './Context/CalendarContext';
 import { AlertContextProvider } from './Context/AlertContext';
+import { UserContextProvider } from './Context/UserContext';
 
 function App() {
   return (
@@ -22,10 +23,12 @@ function App() {
               <ClientContextProvider>
                 <CalendarContextProvider>
                   <AlertContextProvider>
-                    <GlobalStyles />
-                    <BrowserRouter>
-                      <Layout />
-                    </BrowserRouter>
+                    <UserContextProvider>
+                      <GlobalStyles />
+                      <BrowserRouter>
+                        <Layout />
+                      </BrowserRouter>
+                    </UserContextProvider>
                   </AlertContextProvider>
                 </CalendarContextProvider>
               </ClientContextProvider>

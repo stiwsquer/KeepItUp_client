@@ -1,7 +1,6 @@
 import { AppBar, Toolbar, Link, Hidden, IconButton, Box } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-
 import InputIcon from '@mui/icons-material/Input';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -11,8 +10,11 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
+import { useUserContext } from '../../Context/UserContext';
 
 export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
+  const [, setUser] = useUserContext();
+
   const logout = async () => {
     const res = await fetchData(
       null,
@@ -21,7 +23,11 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
       CREDENTIALS.INCLUDE,
     );
     console.log(res);
+    if (res.status === 200) {
+      setUser({});
+    }
   };
+
   return (
     <AppBar elevation={0} sx={{ zIndex: '1000' }}>
       <Toolbar sx={{ height: 64 }}>

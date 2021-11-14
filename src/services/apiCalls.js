@@ -16,12 +16,18 @@ export const ENDPOINTS = {
   WORKOUT_ID: 'workout/id',
   CLIENT: 'client',
   CALENDAR: 'calendar',
+  USER: 'user',
 };
 
 export const CREDENTIALS = {
   INCLUDE: 'include',
   SAME_ORIGIN: 'same-origin',
   OMIT: 'omit',
+};
+
+export const ROLES = {
+  CLIENT: 'client',
+  COACH: 'coach',
 };
 
 const fetchRefreshToken = async () => {

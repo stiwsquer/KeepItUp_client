@@ -46,7 +46,7 @@ export default function Login() {
         timeout: 1500,
       });
       setTimeout(() => {
-        history.push('/app');
+        history.push('/app/calendar');
       }, 1500);
     } else {
       handleAlertData({
