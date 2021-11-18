@@ -19,7 +19,13 @@ import {
 import MyCardActions from '../MyCardActions/MyCardActions';
 import { useUserContext } from '../../Context/UserContext';
 
-export default function CalendarCard({ id, workout, date, client }) {
+export default function CalendarCard({
+  id,
+  workout,
+  date,
+  client,
+  toggleDelete,
+}) {
   const [data, setData] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [user] = useUserContext();
@@ -51,8 +57,7 @@ export default function CalendarCard({ id, workout, date, client }) {
         CREDENTIALS.INCLUDE,
         id,
       );
-      console.log(res);
-
+      toggleDelete();
       return res;
     } catch (err) {
       return console.error(err.message);

@@ -53,13 +53,15 @@ export default function ExerciseCard({
         margin: '1rem',
         border: `0.1rem solid rgba(86, 100, 210,1)`,
         ':hover': {
-          transform: bigCard ? 'scale(1.1)' : 'scale(1)',
+          // transform: bigCard ? 'scale(1.05)' : 'scale(1)',
           boxShadow: boxShadowColor
-            ? `1rem 0rem 0 ${boxShadowColor}`
-            : `1rem 0rem 0 rgba(86, 100, 210,1)`,
+            ? `0 14px 0px ${boxShadowColor}, 0 10px 0px ${boxShadowColor}`
+            : `0 14px 0px rgba(86, 100, 210,0.25), 0 10px 0px rgba(86, 100, 210,0.22)`,
           border: boxShadowColor
             ? `0.1rem solid ${boxShadowColor}`
             : `0.1rem solid rgba(86, 100, 210,1)`,
+          // boxShadow: `0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)`,
+          // boxShadow: `0 14px 28px rgba(86, 100, 210,0.25), 0 10px 10px rgba(86, 100, 210,0.22)`,
           cursor: 'pointer',
         },
       }}
