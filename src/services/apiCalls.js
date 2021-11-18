@@ -83,7 +83,8 @@ export const fetchData = async (
     if (
       httpMethod === HTTP_METHODS.POST ||
       httpMethod === HTTP_METHODS.PATCH ||
-      httpMethod === HTTP_METHODS.PUT
+      httpMethod === HTTP_METHODS.PUT ||
+      httpMethod === HTTP_METHODS.DELETE
     ) {
       return res;
     }

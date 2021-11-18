@@ -10,7 +10,14 @@ import {
 import ExpandCard from '../ExpandCard/ExpandCard';
 import WorkoutCardContent from '../WorkoutCardContent/WorkoutCardContent';
 import MyCardActions from '../MyCardActions/MyCardActions';
-import { ENDPOINTS } from '../../services/apiCalls';
+import {
+  CREDENTIALS,
+  ENDPOINTS,
+  fetchData,
+  HTTP_METHODS,
+} from '../../services/apiCalls';
+import { useAlertContext } from '../../Context/AlertContext';
+import { useFetchTogglerContext } from '../../Context/FetchTogglerContext';
 
 export default function WorkoutCard({
   id,
@@ -21,9 +28,37 @@ export default function WorkoutCard({
   disableAddButton,
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [, handleAlertData] = useAlertContext();
+  const [, toggleFetch] = useFetchTogglerContext();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleDeleteClick = async () => {
+    const res = await fetchData(
+      null,
+      HTTP_METHODS.DELETE,
+      ENDPOINTS.WORKOUT,
+      CREDENTIALS.INCLUDE,
+      id,
+    );
+    toggleFetch();
+    if (res.status === 200) {
+      handleAlertData({
+        severity: 'success',
+        displayAlert: true,
+        message: 'Successfully deleted workout',
+        timeout: 2000,
+      });
+    } else {
+      handleAlertData({
+        severity: 'error',
+        displayAlert: true,
+        message: 'Something went wrong',
+        timeout: 2000,
+      });
+    }
   };
 
   return (
@@ -56,6 +91,7 @@ export default function WorkoutCard({
           handleExpandClick={handleExpandClick}
           workoutId={id}
           disableAddButton={disableAddButton}
+          handleDeleteClick={handleDeleteClick}
           cardType={ENDPOINTS.WORKOUT}
         />
       </Box>

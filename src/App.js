@@ -6,34 +6,19 @@ import { StyledEngineProvider } from '@mui/styled-engine';
 import GlobalStyles from './GlobalStyles';
 import Layout from './components/Layout/Layout';
 import theme from './theme/index';
-import { DashboardSidebarContextProvider } from './Context/DashboardSidebarContext';
-import { ExerciseContextProvider } from './Context/ExerciseCardContext';
-import { ClientContextProvider } from './Context/ClientContext';
-import { CalendarContextProvider } from './Context/CalendarContext';
-import { AlertContextProvider } from './Context/AlertContext';
-import { UserContextProvider } from './Context/UserContext';
+import AppContextProvider from './Context/AppContext';
 
 function App() {
   return (
     <>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <DashboardSidebarContextProvider>
-            <ExerciseContextProvider>
-              <ClientContextProvider>
-                <CalendarContextProvider>
-                  <AlertContextProvider>
-                    <UserContextProvider>
-                      <GlobalStyles />
-                      <BrowserRouter>
-                        <Layout />
-                      </BrowserRouter>
-                    </UserContextProvider>
-                  </AlertContextProvider>
-                </CalendarContextProvider>
-              </ClientContextProvider>
-            </ExerciseContextProvider>
-          </DashboardSidebarContextProvider>
+          <AppContextProvider>
+            <GlobalStyles />
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </AppContextProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </>

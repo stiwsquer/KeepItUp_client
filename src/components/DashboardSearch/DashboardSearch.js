@@ -14,7 +14,7 @@ import PerPageSelect from '../PerPageSelect/PerPageSelect';
 import { useExerciseCardContext } from '../../Context/ExerciseCardContext';
 import DATA_TYPES from '../DataTypes';
 import AddClient from '../AddClient/AddClient';
-import { useClientContext } from '../../Context/ClientContext';
+import { useFetchTogglerContext } from '../../Context/FetchTogglerContext';
 import { useAlertContext } from '../../Context/AlertContext';
 
 export default function DashboardSearch({ dashboardType, bigCard }) {
@@ -26,7 +26,7 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
   const [prevPage, setPrevPage] = useState(false);
   const perPageValues = [20, 50, 100, 200];
   const [, setBigCard] = useExerciseCardContext();
-  const [client] = useClientContext();
+  const [fetch] = useFetchTogglerContext();
   const [alert] = useAlertContext();
 
   const handleFetchData = async () => {
@@ -74,7 +74,7 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
   useEffect(() => {
     handleFetchData();
     console.log(searchedData);
-  }, [searchedValue, page, limit, client]);
+  }, [searchedValue, page, limit, fetch]);
 
   useEffect(() => {
     setPage(1);
@@ -105,7 +105,12 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
           {alert}
           <Box sx={{ margin: '2rem 0', display: 'flex', alignItems: 'center' }}>
             <SearchForm handleChange={debouncedHandleChange} />
-            {dashboardType === DATA_TYPES.CLIENT ? <AddClient /> : null}
+            {dashboardType === DATA_TYPES.CLIENT && (
+              <AddClient dashboardType={DATA_TYPES.CLIENT} />
+            )}
+            {dashboardType === DATA_TYPES.EXERCISE && (
+              <AddClient dashboardType={DATA_TYPES.EXERCISE} />
+            )}
             <PerPageSelect
               limit={limit}
               handleLimitChange={handleLimitChange}
