@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import DATA_TYPES from '../DataTypes';
 import ClientCard from '../ClientCard/ClientCard';
+import WorkoutCard from '../WorkoutCard/WorkoutCard';
 
 export default function MyCards({ cards, boxShadowColor, dataType }) {
   return (
@@ -17,7 +18,6 @@ export default function MyCards({ cards, boxShadowColor, dataType }) {
       {dataType === DATA_TYPES.EXERCISE &&
         cards.map((card) => (
           <>
-            {console.log(card)}
             <ExerciseCard
               boxShadowColor={boxShadowColor}
               title={card.name}
@@ -42,6 +42,21 @@ export default function MyCards({ cards, boxShadowColor, dataType }) {
               lastName={card.lastName}
               key={card.id}
               id={card.id}
+            />
+          </>
+        ))}
+
+      {dataType === DATA_TYPES.WORKOUT &&
+        cards.map((card) => (
+          <>
+            <WorkoutCard
+              key={card.id}
+              id={card.id}
+              title={card.title}
+              description={card.description}
+              exercises={card.exercises}
+              coach={card.coach}
+              disableAddButton
             />
           </>
         ))}

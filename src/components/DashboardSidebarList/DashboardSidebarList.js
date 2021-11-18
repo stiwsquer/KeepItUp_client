@@ -47,19 +47,24 @@ export default function DashboardSidebarList() {
       <Divider />
       <Box>
         <List>
-          {['Calendar', 'Clients', 'Chat', 'Exercises', 'Create Workout'].map(
-            (text, index) => {
-              if (
-                !(
-                  user.role === ROLES.CLIENT &&
-                  ['Clients', 'Create Workout'].includes(text)
-                )
-              ) {
-                return <DashboardSidebarListItems text={text} index={index} />;
-              }
-              return null;
-            },
-          )}
+          {[
+            'Calendar',
+            'Clients',
+            'Chat',
+            'Exercises',
+            'Workouts',
+            'Create Workout',
+          ].map((text, index) => {
+            if (
+              !(
+                user.role === ROLES.CLIENT &&
+                ['Clients', 'Create Workout'].includes(text)
+              )
+            ) {
+              return <DashboardSidebarListItems text={text} index={index} />;
+            }
+            return null;
+          })}
         </List>
       </Box>
     </Box>

@@ -27,6 +27,9 @@ export default function DashboardSidebarListItems({ text, index }) {
       case 'Create Workout':
         history.push('/app/create-workout');
         break;
+      case 'Workouts':
+        history.push('/app/workouts');
+        break;
       default:
         history.push('/app/calendar');
     }
@@ -51,6 +54,8 @@ export default function DashboardSidebarListItems({ text, index }) {
             case 3:
               return <StorageIcon />;
             case 4:
+              return <StorageIcon />;
+            case 5:
               return <FitnessCenterIcon />;
             default:
               return <PersonIcon />;

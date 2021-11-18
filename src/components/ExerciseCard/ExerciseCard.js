@@ -93,6 +93,7 @@ export default function ExerciseCard({
   return (
     <Card
       key={id}
+      onClick={bigCard ? null : handleClick}
       sx={{
         flex: bigCard ? '1 1 20rem' : '1 1 40rem',
         maxWidth: bigCard ? 345 : null,

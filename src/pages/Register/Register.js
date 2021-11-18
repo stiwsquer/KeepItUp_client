@@ -33,11 +33,11 @@ export default function Register() {
         severity: 'success',
         displayAlert: true,
         message: 'Successfully registered',
-        timeout: 2000,
+        timeout: 1000,
       });
       setTimeout(() => {
         history.push('/login');
-      }, 2000);
+      }, 1000);
     } else {
       handleAlertData({
         severity: 'error',

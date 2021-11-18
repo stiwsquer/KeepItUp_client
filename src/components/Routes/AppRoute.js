@@ -39,6 +39,12 @@ export default function AppRoute() {
         dashboardType={DATA_TYPES.CLIENT}
         component={DashboardSearch}
       />
+      <ProtectedRoute
+        roles={[ROLES.COACH, ROLES.CLIENT]}
+        path="/app/workouts"
+        dashboardType={DATA_TYPES.WORKOUT}
+        component={DashboardSearch}
+      />
     </>
   );
 }
