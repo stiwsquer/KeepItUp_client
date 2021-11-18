@@ -4,11 +4,28 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { Box, Button, Container, Grid, Link } from '@mui/material';
 import background from '../../static/landingPageBackground.jpg';
-// import backgroundVideo from '../../static/bgvideo.mp4';
+import backgroundVideo from '../../static/bgvideo.mp4';
 
 export default function LandingPage() {
   return (
     <>
+      <video
+        autoPlay
+        loop
+        muted
+        style={{
+          position: 'absolute',
+          width: '100%',
+          left: '50%',
+          top: '50%',
+          height: '100%',
+          objectFit: 'cover',
+          transform: 'translate(-50%,-50%)',
+          zIndex: '0',
+        }}
+      >
+        <source src={backgroundVideo} type="video/mp4" />
+      </video>
       <Helmet>
         <title>Landing Page | KeepItUp</title>
       </Helmet>
@@ -38,12 +55,12 @@ export default function LandingPage() {
                     height: '200px',
                   }}
                 >
-                  Contender
+                  Log In
                 </Button>
               </Link>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Link component={RouterLink} to="/login" underline="none">
+              <Link component={RouterLink} to="/register" underline="none">
                 <Button
                   variant="contained"
                   color="primary"
@@ -53,7 +70,7 @@ export default function LandingPage() {
                     height: '200px',
                   }}
                 >
-                  Trainer
+                  Register
                 </Button>
               </Link>
             </Grid>
