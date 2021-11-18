@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import AddClientModal from '../AddClientModal/AddClientModal';
 
-export default function AddClient() {
+export default function AddClient({ dashboardType }) {
   const [openModal, setOpenModal] = useState(false);
 
   const toggleOpenModal = () => {
@@ -20,7 +20,11 @@ export default function AddClient() {
         <AddIcon />
       </Button>
 
-      <AddClientModal open={openModal} toggleOpen={toggleOpenModal} />
+      <AddClientModal
+        dashboardType={dashboardType}
+        open={openModal}
+        toggleOpen={toggleOpenModal}
+      />
     </>
   );
 }

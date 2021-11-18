@@ -17,15 +17,18 @@ export default function MyCards({ cards, boxShadowColor, dataType }) {
       {dataType === DATA_TYPES.EXERCISE &&
         cards.map((card) => (
           <>
+            {console.log(card)}
             <ExerciseCard
               boxShadowColor={boxShadowColor}
               title={card.name}
               url={card.url}
+              videoUrl={card.videoUrl}
               bodyPart={card.bodyPart}
               equipment={card.equipment}
               target={card.target}
               key={card.id}
               id={card.id}
+              coachId={card.coach ? card.coach.id : null}
             />
           </>
         ))}

@@ -2,6 +2,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import AddClientForm from '../AddClientForm/AddClientForm';
+import AddExerciseForm from '../AddExerciseForm/AddExerciseForm';
+import DATA_TYPES from '../DataTypes';
 
 const style = {
   position: 'absolute',
@@ -15,12 +17,13 @@ const style = {
   py: 7,
 };
 
-export default function AddClientModal({ open, toggleOpen }) {
+export default function AddClientModal({ dashboardType, open, toggleOpen }) {
   return (
     <div>
       <Modal open={open} onClose={toggleOpen}>
         <Box sx={style}>
-          <AddClientForm />
+          {dashboardType === DATA_TYPES.CLIENT && <AddClientForm />}
+          {dashboardType === DATA_TYPES.EXERCISE && <AddExerciseForm />}
         </Box>
       </Modal>
     </div>

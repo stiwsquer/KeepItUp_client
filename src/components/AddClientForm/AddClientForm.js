@@ -8,12 +8,12 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
-import { useClientContext } from '../../Context/ClientContext';
+import { useFetchTogglerContext } from '../../Context/FetchTogglerContext';
 import { useAlertContext } from '../../Context/AlertContext';
 
 export default function AddClientForm() {
   const [alert, handleAlertData] = useAlertContext();
-  const [, toggleClient] = useClientContext();
+  const [, toggleFetch] = useFetchTogglerContext();
 
   const submit = async (values) => {
     const res = await fetchData(
@@ -32,7 +32,7 @@ export default function AddClientForm() {
         message: 'Successfully added client',
         timeout: 2000,
       });
-      toggleClient();
+      toggleFetch();
     } else {
       handleAlertData({
         severity: 'error',

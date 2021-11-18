@@ -16,15 +16,12 @@ const style = {
   paddingBottom: 10,
 };
 
-export default function ExerciseCardModal({ open, toggleOpen }) {
+export default function ExerciseCardModal({ videoUrl, open, toggleOpen }) {
   return (
     <div>
       <Modal open={open} onClose={toggleOpen}>
         <Box sx={style}>
-          <ReactPlayer
-            controls
-            url="https://live.staticflickr.com/video/51656831834/b961c8a268/1080p.mp4?s=eyJpIjo1MTY1NjgzMTgzNCwiZSI6MTYzNzA1OTM0NCwicyI6IjZiZTNiZjUzOGJjN2FmZmRhMTI3MTcxY2ZhNWM1MWIzYzNlYjhkZmYiLCJ2IjoxfQ"
-          />
+          <ReactPlayer controls url={videoUrl} />
         </Box>
       </Modal>
     </div>

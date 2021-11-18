@@ -3,7 +3,6 @@ import { Box, Button, Hidden } from '@mui/material';
 import debounce from 'lodash.debounce';
 import SearchForm from '../SearchForm/SearchForm';
 import WorkoutCard from '../WorkoutCard/WorkoutCard';
-
 import {
   CREDENTIALS,
   ENDPOINTS,
@@ -12,11 +11,14 @@ import {
 } from '../../services/apiCalls';
 import MyDatePicker from '../MyDatePicker/MyDatePicker';
 import ExpandCard from '../ExpandCard/ExpandCard';
+import { useFetchTogglerContext } from '../../Context/FetchTogglerContext';
 
 export default function SearchWorkouts() {
   const [searchedData, setSearchedData] = useState([]);
   const [searchedValue, setSearchedValue] = useState('');
   const [expanded, setExpanded] = useState(false);
+  const [fetch] = useFetchTogglerContext();
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -30,9 +32,6 @@ export default function SearchWorkouts() {
         CREDENTIALS.INCLUDE,
         searchedValue,
       );
-      console.log(res);
-      console.log(searchedData);
-      console.log(searchedValue);
       setSearchedData(res.results);
     } catch (err) {
       console.error(err.message);
@@ -47,8 +46,7 @@ export default function SearchWorkouts() {
 
   useEffect(() => {
     handleFetchWorkoutsData();
-    console.log(searchedData);
-  }, [searchedValue]);
+  }, [searchedValue, fetch]);
 
   useEffect(
     () => () => {

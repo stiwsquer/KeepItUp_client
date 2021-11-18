@@ -163,7 +163,7 @@ export default function Workouts() {
             )}
           </Formik>
           <MyCards
-            boxShadowColor="red"
+            boxShadowColor="rgba(255, 0, 0, 0.30)"
             cards={exercises}
             dataType={DATA_TYPES.EXERCISE}
           />

@@ -84,16 +84,16 @@ export default function MyCardActions({
         </IconButton>
       )}
 
-      {cardType !== ENDPOINTS.WORKOUT && (
-        <IconButton
-          sx={{ flex: 0 }}
-          onClick={handleDeleteClick}
-          size="large"
-          color="primary"
-        >
-          <DeleteIcon />
-        </IconButton>
-      )}
+      {/* {cardType !== ENDPOINTS.WORKOUT && ( */}
+      <IconButton
+        sx={{ flex: 0 }}
+        onClick={handleDeleteClick}
+        size="large"
+        color="primary"
+      >
+        <DeleteIcon />
+      </IconButton>
+      {/* )} */}
     </CardActions>
   );
 }

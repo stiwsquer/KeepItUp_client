@@ -8,7 +8,7 @@ import {
   fetchData,
   HTTP_METHODS,
 } from '../../services/apiCalls';
-import { useClientContext } from '../../Context/ClientContext';
+import { useFetchTogglerContext } from '../../Context/FetchTogglerContext';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import SearchWorkouts from '../SearchWorkouts/SearchWorkouts';
 import { useCalendarContext } from '../../Context/CalendarContext';
@@ -20,7 +20,7 @@ import MyCardActions from '../MyCardActions/MyCardActions';
 export default function ClientCard({ id, firstName, lastName, email }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [deleteClient, setDeleteClient] = useState(false);
-  const [, toggleClient] = useClientContext();
+  const [, toggleFetch] = useFetchTogglerContext();
   const [expanded, setExpanded] = useState(false);
   const [calendarData, handleCalendarData] = useCalendarContext();
   const [, handleAlertData] = useAlertContext();
@@ -51,7 +51,7 @@ export default function ClientCard({ id, firstName, lastName, email }) {
         message: 'Successfully deleted client',
         timeout: 2000,
       });
-      toggleClient();
+      toggleFetch();
     } else {
       handleAlertData({
         severity: 'error',
