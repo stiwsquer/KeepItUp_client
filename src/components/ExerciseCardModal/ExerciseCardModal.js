@@ -23,7 +23,7 @@ export default function ExerciseCardModal({ open, toggleOpen }) {
         <Box sx={style}>
           <ReactPlayer
             controls
-            url="https://live.staticflickr.com/video/51656831834/b961c8a268/1080p.mp4?s=eyJpIjo1MTY1NjgzMTgzNCwiZSI6MTYzNjM4MjI4OCwicyI6IjhjN2RkMjFlZDAxMjRjNjE2MjBjYTY4ZDUyYTdhMTViNjRlNWY1ZGEiLCJ2IjoxfQ"
+            url="https://live.staticflickr.com/video/51656831834/b961c8a268/1080p.mp4?s=eyJpIjo1MTY1NjgzMTgzNCwiZSI6MTYzNzA1OTM0NCwicyI6IjZiZTNiZjUzOGJjN2FmZmRhMTI3MTcxY2ZhNWM1MWIzYzNlYjhkZmYiLCJ2IjoxfQ"
           />
         </Box>
       </Modal>

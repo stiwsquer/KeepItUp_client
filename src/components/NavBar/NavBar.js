@@ -12,18 +12,17 @@ import {
 } from '../../services/apiCalls';
 import { useUserContext } from '../../Context/UserContext';
 
-export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
-  const [, setUser] = useUserContext();
+export default function NavBar({ toggleSidebar }) {
+  const [user, setUser] = useUserContext();
 
   const logout = async () => {
-    const res = await fetchData(
+    await fetchData(
       null,
       HTTP_METHODS.DELETE,
       ENDPOINTS.LOGOUT,
       CREDENTIALS.INCLUDE,
     );
-    console.log(res.status);
-    setUser({});
+    setUser(false);
   };
 
   return (
@@ -47,7 +46,7 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
           }}
         />
 
-        {!isUserLoggedIn && (
+        {!user && (
           <RouterLink
             to="/login"
             style={{ textDecoration: 'none', color: 'white' }}
@@ -58,7 +57,7 @@ export default function NavBar({ isUserLoggedIn, toggleSidebar }) {
           </RouterLink>
         )}
 
-        {isUserLoggedIn && (
+        {user && (
           <>
             <RouterLink
               to="/"

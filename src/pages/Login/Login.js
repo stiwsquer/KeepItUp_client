@@ -24,15 +24,17 @@ import {
   HTTP_METHODS,
 } from '../../services/apiCalls';
 import { useAlertContext } from '../../Context/AlertContext';
+import { useUserContext } from '../../Context/UserContext';
 // import FacebookIcon from '../../icons/Facebook';
 // import GoogleIcon from '../../icons/Google';
 
 export default function Login() {
   const history = useHistory();
   const [alert, handleAlertData] = useAlertContext();
+  const [, setUser] = useUserContext();
 
   const submit = async (values) => {
-    const res = await fetchData(
+    let res = await fetchData(
       values,
       HTTP_METHODS.POST,
       ENDPOINTS.LOGIN,
@@ -43,11 +45,11 @@ export default function Login() {
         severity: 'success',
         displayAlert: true,
         message: 'Successfully logged in',
-        timeout: 1500,
+        timeout: 1000,
       });
-      setTimeout(() => {
-        history.push('/app/calendar');
-      }, 1500);
+      res = await res.json();
+      setUser(() => res);
+      history.push('/app/calendar');
     } else {
       handleAlertData({
         severity: 'error',

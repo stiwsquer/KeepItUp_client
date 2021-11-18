@@ -9,6 +9,7 @@ import {
 import LoginRoute from '../../Routes/LoginRoute';
 import RegisterRoute from '../../Routes/RegisterRoute';
 import LandingRoute from '../../Routes/LandingRoute';
+import Unauthorized from '../../Unauthorized/Unauthorized';
 
 export default function MainLayout() {
   return (
@@ -19,7 +20,7 @@ export default function MainLayout() {
             <LandingRoute />
             <LoginRoute />
             <RegisterRoute />
-            <Route exact path="/404" />
+            <Route exact path="/404" component={Unauthorized} />
           </LayoutContent>
         </LayoutContainer>
       </LayoutWrapper>

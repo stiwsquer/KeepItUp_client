@@ -12,6 +12,11 @@ import formatDate from '../FormatDate/FormatDate';
 export default function DashboardCalendar() {
   const [date, setDate] = useState(formatDate(new Date()));
   const [data, setData] = useState([]);
+  const [deleteCalendar, setDeleteCalendar] = useState(false);
+
+  const toggleDelete = () => {
+    setDeleteCalendar((prev) => !prev);
+  };
 
   const handleDateChange = (newValue) => {
     const formattedDate = formatDate(newValue);
@@ -32,7 +37,7 @@ export default function DashboardCalendar() {
 
   useEffect(() => {
     handleFetchCalendars();
-  }, [date]);
+  }, [date, deleteCalendar]);
 
   return (
     <>
@@ -46,6 +51,7 @@ export default function DashboardCalendar() {
             client={card.client}
             workout={card.workout}
             date={card.date}
+            toggleDelete={toggleDelete}
           />
         ))}
     </>
