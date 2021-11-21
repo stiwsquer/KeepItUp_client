@@ -7,6 +7,7 @@ import CreateWorkout from '../CreateWorkout/CreateWorkout';
 import DATA_TYPES from '../DataTypes';
 import DashboardCalendar from '../DashboardCalendar/DashboardCalendar';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Messenger from '../../pages/Messenger/Messenger';
 
 export default function AppRoute() {
   return (
@@ -44,6 +45,12 @@ export default function AppRoute() {
         path="/app/workouts"
         dashboardType={DATA_TYPES.WORKOUT}
         component={DashboardSearch}
+      />
+
+      <ProtectedRoute
+        roles={[ROLES.COACH, ROLES.CLIENT]}
+        path="/app/messenger"
+        component={Messenger}
       />
     </>
   );
