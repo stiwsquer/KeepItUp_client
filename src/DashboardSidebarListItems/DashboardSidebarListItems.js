@@ -19,7 +19,7 @@ export default function DashboardSidebarListItems({ text, index }) {
         history.push('/app/clients');
         break;
       case 'Chat':
-        history.push('/app/chat');
+        history.push('/app/messenger');
         break;
       case 'Exercises':
         history.push('/app/exercises');
