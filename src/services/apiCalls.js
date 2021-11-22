@@ -19,6 +19,8 @@ export const ENDPOINTS = {
   CALENDAR_CLIENT: 'calendar/client',
   CALENDAR_DATE: 'calendar/date',
   USER: 'user',
+  CONVERSATION: 'conversation',
+  MESSAGE: 'message',
 };
 
 export const CREDENTIALS = {
