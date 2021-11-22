@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Input, TextField, Button, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { io } from 'socket.io-client';
-import Conversation from '../../components/Conversation/Conversation';
 import theme from '../../theme/index';
-import Message from '../../components/Message/Message';
 import {
   CREDENTIALS,
   ENDPOINTS,
@@ -12,50 +10,18 @@ import {
   ROLES,
 } from '../../services/apiCalls';
 import { useUserContext } from '../../Context/UserContext';
+import Conversations from '../../components/Conversations/Conversations';
+import MessengerForm from '../../components/MessengerForm/MessengerForm';
+import OpenConversationMessage from '../../components/OpenConversationMessage/OpenConversationMessage';
+import Messages from '../../components/Messages/Messages';
 
 export default function Messenger() {
   const [user] = useUserContext();
-  const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const scrollRef = useRef();
   const socket = useRef();
-
-  const fetchConversations = async () => {
-    const res = await fetchData(
-      null,
-      HTTP_METHODS.GET,
-      ENDPOINTS.CONVERSATION,
-      CREDENTIALS.INCLUDE,
-    );
-    console.log(res.results);
-    setConversations(res.results);
-  };
-
-  useEffect(() => {
-    fetchConversations();
-    socket.current = io('ws://localhost:3002');
-    socket.current.emit('addUser', user.id);
-    socket.current.on('getMessage', (data) => {
-      let owner;
-      if (user.role === ROLES.COACH) {
-        owner = ROLES.CLIENT;
-      } else {
-        owner = ROLES.COACH;
-      }
-      setArrivalMessage({
-        content: data.text,
-        owner,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    socket.current.emit('addUser', user.id);
-  }, [user]);
 
   const fetchMessages = async () => {
     const res = await fetchData(
@@ -68,15 +34,7 @@ export default function Messenger() {
     setMessages(res.results);
   };
 
-  const saveMessage = async () => {
-    if (newMessage === '') return;
-    const message = {
-      conversation: currentChat.id,
-      content: newMessage,
-      coach: currentChat.coach.id,
-      client: currentChat.client.id,
-    };
-
+  const emitNewMessage = () => {
     const receiverId =
       currentChat.coach.id === user.id
         ? currentChat.client.id
@@ -86,6 +44,18 @@ export default function Messenger() {
       receiverId,
       text: newMessage,
     });
+  };
+
+  const saveMessage = async () => {
+    if (newMessage === '') return;
+    const message = {
+      conversation: currentChat.id,
+      content: newMessage,
+      coach: currentChat.coach.id,
+      client: currentChat.client.id,
+    };
+
+    emitNewMessage();
 
     let res = await fetchData(
       message,
@@ -102,22 +72,44 @@ export default function Messenger() {
     if (arrivalMessage) setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
+  useEffect(() => {
+    try {
+      if (currentChat) fetchMessages();
+    } catch (e) {
+      console.log(e);
+    }
+  }, [currentChat]);
+
+  useEffect(() => {
+    socket.current = io('ws://localhost:3002');
+    socket.current.emit('addUser', user.id);
+    socket.current.on('getMessage', (data) => {
+      let owner;
+      if (user.role === ROLES.COACH) {
+        owner = ROLES.CLIENT;
+      } else {
+        owner = ROLES.COACH;
+      }
+
+      setArrivalMessage({
+        content: data.text,
+        owner,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit('addUser', user.id);
+  }, [user]);
+
   const handleConversationClick = (chat) => {
     setCurrentChat(chat);
   };
 
-  useEffect(() => {
-    if (currentChat) fetchMessages();
-  }, [currentChat]);
-
   const handleSubmit = () => {
     saveMessage();
   };
-
-  useEffect(() => {
-    if (scrollRef.current)
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, [messages]);
 
   return (
     <Box
@@ -125,26 +117,22 @@ export default function Messenger() {
         height: '100%',
         display: 'flex',
         bgcolor: theme.palette.background.paper,
+        justifyContent: 'center',
       }}
     >
-      <Box sx={{ flex: 3 }}>
-        <Box sx={{ padding: '10px', height: '100%' }}>
-          <Input
-            placeholder="Search for conversations"
-            fullWidth
-            sx={{ padding: '10px 0px', mb: '10px' }}
-          />
-          {conversations.length > 0 &&
-            conversations.map((conv) => (
-              <Conversation
-                handleConversationClick={handleConversationClick}
-                conversation={conv}
-                user={user}
-              />
-            ))}
-        </Box>
+      <Box sx={{ flex: 3, maxWidth: '300px' }}>
+        <Conversations
+          currentChat={currentChat}
+          handleConversationClick={handleConversationClick}
+        />
       </Box>
-      <Box sx={{ flex: 7 }}>
+      <Box
+        sx={{
+          flex: 7,
+          boxShadow: '-1px 0px 10px rgba(0,0,0,0.2)',
+          maxWidth: '1000px',
+        }}
+      >
         <Box
           sx={{
             padding: '10px',
@@ -156,52 +144,16 @@ export default function Messenger() {
           }}
         >
           {currentChat ? (
-            <Box sx={{ height: '100%', overflowY: 'scroll', pr: '10px' }}>
-              {messages &&
-                messages.map((message) => (
-                  <div ref={scrollRef}>
-                    <Message
-                      owner={user.role === message.owner}
-                      message={message}
-                    />
-                  </div>
-                ))}
-            </Box>
+            <Messages messages={messages} user={user} />
           ) : (
-            <Box
-              sx={{
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                color: 'rgba(0,0,0,0.2)',
-              }}
-            >
-              <Typography variant="h3">
-                Open a conversation to start a chat
-              </Typography>
-            </Box>
+            <OpenConversationMessage />
           )}
 
-          <Box
-            sx={{ mt: '5px', display: 'flex', justifyContent: 'space-between' }}
-          >
-            <TextField
-              label="Start typing"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              multiline
-              fullWidth
-            />
-            <Button
-              onClick={handleSubmit}
-              sx={{ mx: '5px' }}
-              variant="contained"
-              color="primary"
-            >
-              Send
-            </Button>
-          </Box>
+          <MessengerForm
+            handleSubmit={handleSubmit}
+            setNewMessage={setNewMessage}
+            newMessage={newMessage}
+          />
         </Box>
       </Box>
     </Box>
