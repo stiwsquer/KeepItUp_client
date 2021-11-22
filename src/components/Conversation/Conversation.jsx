@@ -7,8 +7,10 @@ export default function Conversation({
   conversation,
   handleConversationClick,
   user,
+  currentChat,
 }) {
   const [convUser, setConvUser] = useState(conversation.client);
+  const [selected, setSelected] = useState(false);
 
   useEffect(() => {
     const currentUser =
@@ -16,13 +18,20 @@ export default function Conversation({
     setConvUser(currentUser);
   }, []);
 
+  useEffect(() => {
+    if (currentChat && currentChat.id === conversation.id) setSelected(true);
+    else setSelected(false);
+  }, [currentChat]);
+
   return (
     <Card
       sx={{
         border: 'none',
         boxShadow: 'none',
         cursor: 'pointer',
-        bgcolor: theme.palette.background.paper,
+        bgcolor: selected
+          ? theme.palette.background.default
+          : theme.palette.background.paper,
         ':hover': {
           bgcolor: 'lightgray',
         },

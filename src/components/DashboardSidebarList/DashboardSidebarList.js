@@ -58,7 +58,7 @@ export default function DashboardSidebarList() {
             if (
               !(
                 user.role === ROLES.CLIENT &&
-                ['Clients', 'Create Workout'].includes(text)
+                ['Clients', 'Create Workout', 'Workouts'].includes(text)
               )
             ) {
               return <DashboardSidebarListItems text={text} index={index} />;

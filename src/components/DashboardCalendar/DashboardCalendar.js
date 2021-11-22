@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import {
   CREDENTIALS,
@@ -41,19 +42,21 @@ export default function DashboardCalendar() {
 
   return (
     <>
-      <Calendar date={date} handleDateChange={handleDateChange} />
+      <Container maxWidth="lg">
+        <Calendar date={date} handleDateChange={handleDateChange} />
 
-      {data &&
-        data.map((card) => (
-          <CalendarCard
-            key={card.id}
-            id={card.id}
-            client={card.client}
-            workout={card.workout}
-            date={card.date}
-            toggleDelete={toggleDelete}
-          />
-        ))}
+        {data &&
+          data.map((card) => (
+            <CalendarCard
+              key={card.id}
+              id={card.id}
+              client={card.client}
+              workout={card.workout}
+              date={card.date}
+              toggleDelete={toggleDelete}
+            />
+          ))}
+      </Container>{' '}
     </>
   );
 }

@@ -41,7 +41,7 @@ export default function AppRoute() {
         component={DashboardSearch}
       />
       <ProtectedRoute
-        roles={[ROLES.COACH, ROLES.CLIENT]}
+        roles={[ROLES.COACH]}
         path="/app/workouts"
         dashboardType={DATA_TYPES.WORKOUT}
         component={DashboardSearch}
