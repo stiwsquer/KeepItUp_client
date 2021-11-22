@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { format } from 'timeago.js';
-import { Avatar, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import theme from '../../theme';
-import { ROLES } from '../../services/apiCalls';
+// import { ROLES } from '../../services/apiCalls';
 
 export default function Message({ message, owner }) {
-  const [messageUser, setMessageUser] = useState(message.client);
+  // const [messageUser, setMessageUser] = useState(message.client);
 
-  useEffect(() => {
-    const currentUser =
-      message.owner !== ROLES.COACH ? message.client : message.coach;
-    setMessageUser(currentUser);
-  }, []);
+  // useEffect(() => {
+  //   const currentUser =
+  //     message.owner !== ROLES.COACH ? message.client : message.coach;
+  //   setMessageUser(currentUser);
+  // }, []);
 
   return (
     <div>
       <Box sx={{ display: 'flex', flexDirection: 'column', mt: '20px' }}>
         <Box sx={{ alignSelf: owner ? 'flex-end' : 'flex-start' }}>
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Avatar
+            {/* <Avatar
               sx={{
                 width: '32px',
                 height: '32px',
@@ -29,7 +29,7 @@ export default function Message({ message, owner }) {
               }}
             >
               {messageUser.firstName ? messageUser.firstName[0] : null}
-            </Avatar>
+            </Avatar> */}
             <Typography
               variant="body1"
               // color={owner ? 'textPrimary' : 'textSecondary'}

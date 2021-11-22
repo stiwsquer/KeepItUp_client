@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Input, TextField, Button, Typography } from '@mui/material';
+import { io } from 'socket.io-client';
 import Conversation from '../../components/Conversation/Conversation';
 import theme from '../../theme/index';
 import Message from '../../components/Message/Message';
@@ -8,6 +9,7 @@ import {
   ENDPOINTS,
   fetchData,
   HTTP_METHODS,
+  ROLES,
 } from '../../services/apiCalls';
 import { useUserContext } from '../../Context/UserContext';
 
@@ -17,7 +19,9 @@ export default function Messenger() {
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
+  const socket = useRef();
 
   const fetchConversations = async () => {
     const res = await fetchData(
@@ -30,6 +34,29 @@ export default function Messenger() {
     setConversations(res.results);
   };
 
+  useEffect(() => {
+    fetchConversations();
+    socket.current = io('ws://localhost:3002');
+    socket.current.emit('addUser', user.id);
+    socket.current.on('getMessage', (data) => {
+      let owner;
+      if (user.role === ROLES.COACH) {
+        owner = ROLES.CLIENT;
+      } else {
+        owner = ROLES.COACH;
+      }
+      setArrivalMessage({
+        content: data.text,
+        owner,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit('addUser', user.id);
+  }, [user]);
+
   const fetchMessages = async () => {
     const res = await fetchData(
       null,
@@ -38,7 +65,6 @@ export default function Messenger() {
       CREDENTIALS.INCLUDE,
       currentChat.id,
     );
-    console.log(res.results);
     setMessages(res.results);
   };
 
@@ -50,6 +76,17 @@ export default function Messenger() {
       coach: currentChat.coach.id,
       client: currentChat.client.id,
     };
+
+    const receiverId =
+      currentChat.coach.id === user.id
+        ? currentChat.client.id
+        : currentChat.coach.id;
+    socket.current.emit('sendMessage', {
+      senderId: user.id,
+      receiverId,
+      text: newMessage,
+    });
+
     let res = await fetchData(
       message,
       HTTP_METHODS.POST,
@@ -57,14 +94,13 @@ export default function Messenger() {
       CREDENTIALS.INCLUDE,
     );
     res = await res.json();
-    console.log(res);
-    setMessages([...messages, res]);
+    setMessages((prev) => [...prev, res]);
     setNewMessage('');
   };
 
   useEffect(() => {
-    fetchConversations();
-  }, []);
+    if (arrivalMessage) setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
 
   const handleConversationClick = (chat) => {
     setCurrentChat(chat);
@@ -79,9 +115,10 @@ export default function Messenger() {
   };
 
   useEffect(() => {
-    console.log(scrollRef.current);
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (scrollRef.current)
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [messages]);
+
   return (
     <Box
       sx={{
@@ -126,7 +163,6 @@ export default function Messenger() {
                     <Message
                       owner={user.role === message.owner}
                       message={message}
-                      user={user}
                     />
                   </div>
                 ))}
