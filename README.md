@@ -11,10 +11,10 @@ JavaScript, React.js, Material UI, Node.js, TypeORM, Express.js, Socket.io, esli
 #### This repo is part of a larger project
 
 ##### KeepItUp_server - Server
-https://github.com/stiwsquer/
+https://github.com/stiwsquer/KeepItUp_server
 
 ##### KeepItUp_socket - Socket Server
-https://github.com/stiwsquer/
+https://github.com/stiwsquer/KeepItUp_socket
 
 
 ## Appearance
