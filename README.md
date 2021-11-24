@@ -1,4 +1,4 @@
-# DressUP 
+# KeepItUp
 
 Web application for sport coaches to creating and managing training plans
 
