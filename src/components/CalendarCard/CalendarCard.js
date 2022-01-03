@@ -118,6 +118,7 @@ export default function CalendarCard({
                 exercises={card.exercises}
                 coach={card.coach}
                 disableAddButton
+                disableDeleteButton
               />
             </>
           ))}

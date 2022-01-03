@@ -6,7 +6,8 @@ import AddClientModal from '../AddClientModal/AddClientModal';
 
 export default function AddClient({ dashboardType }) {
   const [openModal, setOpenModal] = useState(false);
-
+  /**
+   */
   const toggleOpenModal = () => {
     setOpenModal((prev) => !prev);
   };

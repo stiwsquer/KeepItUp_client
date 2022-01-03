@@ -21,6 +21,7 @@ export default function MyCardActions({
   handleDeleteClick,
   workoutId,
   disableAddButton,
+  disableDeleteButton,
   cardType,
 }) {
   const [calendarData, handleCalendarData] = useCalendarContext();
@@ -85,14 +86,17 @@ export default function MyCardActions({
       )}
 
       {/* {cardType !== ENDPOINTS.WORKOUT && ( */}
-      <IconButton
-        sx={{ flex: 0 }}
-        onClick={handleDeleteClick}
-        size="large"
-        color="primary"
-      >
-        <DeleteIcon />
-      </IconButton>
+      {!disableDeleteButton && (
+        <IconButton
+          sx={{ flex: 0 }}
+          onClick={handleDeleteClick}
+          size="large"
+          color="primary"
+        >
+          <DeleteIcon />
+        </IconButton>
+      )}
+
       {/* )} */}
     </CardActions>
   );

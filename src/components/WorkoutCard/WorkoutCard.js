@@ -26,6 +26,7 @@ export default function WorkoutCard({
   exercises,
   coach,
   disableAddButton,
+  disableDeleteButton,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [, handleAlertData] = useAlertContext();
@@ -91,6 +92,7 @@ export default function WorkoutCard({
           handleExpandClick={handleExpandClick}
           workoutId={id}
           disableAddButton={disableAddButton}
+          disableDeleteButton={disableDeleteButton}
           handleDeleteClick={handleDeleteClick}
           cardType={ENDPOINTS.WORKOUT}
         />

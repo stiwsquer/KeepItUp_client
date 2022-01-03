@@ -2,13 +2,11 @@ import React from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
-  // Alert,
   Box,
   Button,
   Container,
   FormControlLabel,
   FormHelperText,
-  // Grid,
   Link,
   Radio,
   RadioGroup,
@@ -25,8 +23,6 @@ import {
 } from '../../services/apiCalls';
 import { useAlertContext } from '../../Context/AlertContext';
 import { useUserContext } from '../../Context/UserContext';
-// import FacebookIcon from '../../icons/Facebook';
-// import GoogleIcon from '../../icons/Google';
 
 export default function Login() {
   const history = useHistory();
@@ -119,45 +115,6 @@ export default function Login() {
                   </Typography>
                 </Box>
                 {alert}
-
-                {/* <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    <Button
-                      color="primary"
-                      fullWidth
-                      variant="contained"
-                      size="large"
-                      startIcon={<FacebookIcon />}
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Button
-                      color="primary"
-                      fullWidth
-                      variant="contained"
-                      size="large"
-                      startIcon={<GoogleIcon />}
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid> */}
-                {/* <Box
-                  sx={{
-                    mb: 1,
-                    mt: 3,
-                  }}
-                >
-                  <Typography
-                    align="center"
-                    variant="body1"
-                    color="textSecondary"
-                  >
-                    or login with email address
-                  </Typography>
-                </Box> */}
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth

@@ -44,7 +44,6 @@ export default function DashboardSearch({ dashboardType, bigCard }) {
         page,
         limit,
       );
-      console.log(res);
       if (res.next) setNextPage(true);
       else setNextPage(false);
       if (res.previous) setPrevPage(true);
